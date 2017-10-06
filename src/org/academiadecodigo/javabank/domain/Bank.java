@@ -9,6 +9,7 @@ public class Bank {
 
     private AccountManager accountManager;
     private Set<Customer> customers = new HashSet<>();
+    private Customer customer;
 
     public Bank(AccountManager accountManager) {
         this.accountManager = accountManager;
