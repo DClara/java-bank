@@ -12,6 +12,7 @@ public class AccountManager {
 
     private static int numberAccounts = 0;
     Map<Integer, Account> accountMap;
+    private Account activeAccount;
 
     public AccountManager() {
         this.accountMap = new HashMap<>();
@@ -29,6 +30,7 @@ public class AccountManager {
         }
 
         accountMap.put(newAccount.getId(), newAccount);
+        setActiveAccount(newAccount);
         return newAccount;
 
     }
@@ -68,4 +70,13 @@ public class AccountManager {
         dstAccount.credit(amount);
 
     }
+
+    public void setActiveAccount (Account account) {
+        this.activeAccount = account;
+    }
+
+    public Account getActiveAccount() {
+        return this.activeAccount;
+    }
+
 }

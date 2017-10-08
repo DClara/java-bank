@@ -17,8 +17,13 @@ public class Customer {
     public Customer() {
         this.customerId = ++counter;
     }
+
     public void setAccountManager(AccountManager accountManager) {
         this.accountManager = accountManager;
+    }
+
+    public AccountManager getAccountManager() {
+        return this.accountManager;
     }
 
     public int openAccount(AccountType accountType) {
@@ -42,4 +47,11 @@ public class Customer {
         return balance;
     }
 
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public Account getAccount() {
+        return accountManager.getActiveAccount();
+    }
 }
