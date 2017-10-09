@@ -1,48 +1,48 @@
 package org.academiadecodigo.javabank.domain;
 
-import org.academiadecodigo.javabank.domain.account.Account;
 import org.academiadecodigo.javabank.managers.AccountManager;
 
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Set;
 
 public class Bank {
 
     private AccountManager accountManager;
-    private Set<Customer> customers = new HashSet<>();
-    private Customer activeCustomer;
+    private HashMap<Integer, Customer> customers;
 
-    public Bank(AccountManager accountManager) {
-        this.accountManager = accountManager;
+    public Bank() {
+        this.customers = new HashMap<>();
     }
 
     public void addCustomer(Customer customer) {
-        customers.add(customer);
-        setActiveCustomer(customer);
+        customers.put(customer.getId(), customer);
         customer.setAccountManager(accountManager);
+    }
+
+    public Customer getCustomer(int id) {
+        return customers.get(id);
+    }
+
+    public Set<Integer> getCustomerIds() {
+        return customers.keySet();
     }
 
     public double getBalance() {
 
         double balance = 0;
 
-        for (Customer customer : customers) {
+        for (Customer customer : customers.values()) {
             balance += customer.getBalance();
         }
 
         return balance;
     }
 
-    public Account activeAccount() {
-        return accountManager.getActiveAccount();
+    public void setAccountManager(AccountManager accountManager) {
+        this.accountManager = accountManager;
     }
 
-    public void setActiveCustomer(Customer customer) {
-        this.activeCustomer = customer;
+    public AccountManager getAccountManager() {
+        return accountManager;
     }
-
-    public Customer getActiveCustomer() {
-        return this.activeCustomer;
-    }
-
 }
