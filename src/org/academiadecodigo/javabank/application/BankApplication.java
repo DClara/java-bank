@@ -1,9 +1,10 @@
 package org.academiadecodigo.javabank.application;
 
-import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 import org.academiadecodigo.bootcamp.Prompt;
-import org.academiadecodigo.bootcamp.scanners.integer.IntegerSetInputScanner;
-import org.academiadecodigo.javabank.application.operations.*;
+import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
+import org.academiadecodigo.javabank.application.operations.BalanceOperation;
+import org.academiadecodigo.javabank.application.operations.NewAccountOperation;
+import org.academiadecodigo.javabank.application.operations.Operation;
 import org.academiadecodigo.javabank.application.operations.transaction.DepositOperation;
 import org.academiadecodigo.javabank.application.operations.transaction.WithdrawOperation;
 import org.academiadecodigo.javabank.domain.Bank;
@@ -18,7 +19,7 @@ public class BankApplication {
     private Map<Integer, Operation> operationsMap;
 
     private Bank bank;
-    private int acessingCustomerId;
+    //private int accessingCustomerId;
 
     public BankApplication(Bank bank) {
         this.bank = bank;
@@ -29,8 +30,10 @@ public class BankApplication {
 
         mainMenu = buildMainMenu();
 
-        acessingCustomerId = scanCustomerId();
-        operationsMap = buildOperationsMap();
+        // accessingCustomerId = scanCustomerId();
+        //new CustomerSelectionView(bank).scanCustomerId();
+
+        //operationsMap = buildOperationsMap();
         menuLoop();
 
     }
@@ -48,14 +51,6 @@ public class BankApplication {
 
     }
 
-    private int scanCustomerId() {
-
-        IntegerSetInputScanner scanner = new IntegerSetInputScanner(bank.getCustomerIds());
-        scanner.setMessage(Messages.CHOOSE_CUSTOMER);
-        scanner.setError(Messages.ERROR_INVALID_CUSTOMER);
-        return prompt.getUserInput(scanner);
-
-    }
 
     private MenuInputScanner buildMainMenu() {
 
@@ -66,7 +61,7 @@ public class BankApplication {
         return mainMenu;
 
     }
-
+    /*
     private Map<Integer, Operation> buildOperationsMap() {
 
         Map<Integer, Operation> map = new HashMap<>();
@@ -77,11 +72,7 @@ public class BankApplication {
 
         return map;
 
-    }
-
-    public int getAcessingCustomerId() {
-        return acessingCustomerId;
-    }
+    }*/
 
     public Bank getBank() {
         return bank;

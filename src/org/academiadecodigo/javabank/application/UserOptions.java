@@ -1,5 +1,10 @@
 package org.academiadecodigo.javabank.application;
 
+import org.academiadecodigo.javabank.application.operations.Operation;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public enum  UserOptions {
 
     GET_BALANCE(1, Messages.MENU_GET_BALANCE),
@@ -10,6 +15,7 @@ public enum  UserOptions {
 
     private int option;
     private String message;
+    private Map<Integer, Operation> map = new HashMap<>();
 
     public int getOption() {
         return option;
