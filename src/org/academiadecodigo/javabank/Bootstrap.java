@@ -6,6 +6,7 @@ import org.academiadecodigo.javabank.controller.*;
 import org.academiadecodigo.javabank.domain.Bank;
 import org.academiadecodigo.javabank.domain.Customer;
 import org.academiadecodigo.javabank.managers.AccountManager;
+import org.academiadecodigo.javabank.views.BalanceView;
 import org.academiadecodigo.javabank.views.LoginView;
 import org.academiadecodigo.javabank.views.MainMenuView;
 
@@ -43,6 +44,12 @@ public class Bootstrap {
         mainMenuView.setMainMenuController(mainMenuController);
 
         mainMenuController.setControllersMap(buildControllersMap());
+
+        Customer activeCustomer = bank.getCustomer(bank.getAccessingCustomerId());
+        BalanceView balanceView = new BalanceView(activeCustomer);
+        ViewBalanceController viewBalanceController = new ViewBalanceController(activeCustomer, balanceView);
+
+        balanceView.setViewBalanceController(viewBalanceController);
 
     }
 
