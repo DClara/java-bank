@@ -3,6 +3,7 @@ package org.academiadecodigo.javabank.domain.user_application_test;
 import org.academiadecodigo.javabank.domain.Bank;
 import org.academiadecodigo.javabank.domain.Customer;
 import org.academiadecodigo.javabank.domain.TestPopulation;
+import org.academiadecodigo.javabank.domain.account.Account;
 import org.academiadecodigo.javabank.managers.AccountManager;
 
 public class Application {
@@ -28,8 +29,8 @@ public class Application {
         entryMenu.menuPresentation();
     }
 
-    private int scanAccountId() {
-        return this.bank.activeAccountId();
+    private Account scanAccountId() {
+        return this.bank.activeAccount();
     }
 
     private Customer scanActiveCustomer(Bank bank) {

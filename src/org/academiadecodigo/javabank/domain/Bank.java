@@ -1,5 +1,6 @@
 package org.academiadecodigo.javabank.domain;
 
+import org.academiadecodigo.javabank.domain.account.Account;
 import org.academiadecodigo.javabank.managers.AccountManager;
 
 import java.util.HashSet;
@@ -32,8 +33,8 @@ public class Bank {
         return balance;
     }
 
-    public int activeAccountId() {
-        return accountManager.getActiveAccountID();
+    public Account activeAccount() {
+        return accountManager.getActiveAccount();
     }
 
     public void setActiveCustomer(Customer customer) {

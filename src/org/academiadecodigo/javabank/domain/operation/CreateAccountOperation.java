@@ -1,6 +1,7 @@
 package org.academiadecodigo.javabank.domain.operation;
 
 import org.academiadecodigo.javabank.domain.Customer;
+import org.academiadecodigo.javabank.domain.account.Account;
 import org.academiadecodigo.javabank.domain.account.AccountType;
 import org.academiadecodigo.javabank.domain.user_application_test.EntryMenu;
 
@@ -16,7 +17,7 @@ public class CreateAccountOperation implements Operation {
 
         int userSelection = accountId.getUserInput(customerScanner);*/
 
-        customer.openAccount(AccountType.CHECKING);
-        return;
+        int accountID = customer.openAccount(AccountType.CHECKING);
+        System.out.println("Account with ID " + accountID + " was successfully created");
     }
 }
