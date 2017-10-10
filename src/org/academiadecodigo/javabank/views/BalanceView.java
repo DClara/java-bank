@@ -1,17 +1,18 @@
 package org.academiadecodigo.javabank.views;
 
 import org.academiadecodigo.bootcamp.Prompt;
+import org.academiadecodigo.javabank.application.Messages;
 import org.academiadecodigo.javabank.controller.ViewBalanceController;
-import org.academiadecodigo.javabank.domain.Customer;
+import org.academiadecodigo.javabank.domain.Bank;
 
 public class BalanceView implements View {
 
-    private Customer customer;
+    private Bank bank;
     private ViewBalanceController viewBalanceController;
     private Prompt prompt;
 
-    public BalanceView(Customer customer) {
-        this.customer = customer;
+    public BalanceView(Bank bank) {
+        this.bank = bank;
         this.prompt = new Prompt(System.in,System.out);
     }
 
@@ -21,6 +22,7 @@ public class BalanceView implements View {
 
     @Override
     public void show() {
-
+        viewBalanceController.scanCustomerAccounts();
     }
+
 }

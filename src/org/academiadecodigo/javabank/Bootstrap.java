@@ -5,8 +5,13 @@ import org.academiadecodigo.javabank.application.operations.Operation;
 import org.academiadecodigo.javabank.controller.*;
 import org.academiadecodigo.javabank.domain.Bank;
 import org.academiadecodigo.javabank.domain.Customer;
+import org.academiadecodigo.javabank.domain.account.Account;
+import org.academiadecodigo.javabank.domain.account.AccountType;
+import org.academiadecodigo.javabank.domain.account.CheckingAccount;
+import org.academiadecodigo.javabank.factories.AccountFactory;
 import org.academiadecodigo.javabank.managers.AccountManager;
 import org.academiadecodigo.javabank.views.BalanceView;
+import org.academiadecodigo.javabank.views.DepositView;
 import org.academiadecodigo.javabank.views.LoginView;
 import org.academiadecodigo.javabank.views.MainMenuView;
 
@@ -15,7 +20,7 @@ import java.util.Map;
 
 public class Bootstrap {
     private Controller initialController;
-
+    Map<Integer, Controller> buildControllersMap = new HashMap<>();
 
     public void populate4test() {
         Bank bank = new Bank();
@@ -31,9 +36,10 @@ public class Bootstrap {
         bank.addCustomer(c2);
         bank.addCustomer(c3);
 
+        c1.openAccount(AccountType.CHECKING);
+
         LoginView loginView = new LoginView(bank);
         LoginController loginController = new LoginController(bank, loginView);
-        //loginController.setNextView();
 
         setInitialController(loginController);
         loginView.setLoginController(loginController);
@@ -43,13 +49,25 @@ public class Bootstrap {
         loginController.setNextController(mainMenuController);
         mainMenuView.setMainMenuController(mainMenuController);
 
-        mainMenuController.setControllersMap(buildControllersMap());
+        mainMenuController.setControllersMap(buildControllersMap);
 
-        Customer activeCustomer = bank.getCustomer(bank.getAccessingCustomerId());
-        BalanceView balanceView = new BalanceView(activeCustomer);
-        ViewBalanceController viewBalanceController = new ViewBalanceController(activeCustomer, balanceView);
-
+        BalanceView balanceView = new BalanceView(bank);
+        ViewBalanceController viewBalanceController = new ViewBalanceController(bank);
+        viewBalanceController.setView(balanceView);
         balanceView.setViewBalanceController(viewBalanceController);
+        viewBalanceController.setNextController(mainMenuController);
+
+        DepositView depositView = new DepositView(bank);
+        DepositController depositController = new DepositController(bank);
+        depositController.setView(depositView);
+        depositView.setDepositController(depositController);
+        depositController.setNextController(mainMenuController);
+
+
+        buildControllersMap.put(UserOptions.GET_BALANCE.getOption(), viewBalanceController);
+        buildControllersMap.put(UserOptions.DEPOSIT.getOption(), depositController);
+        buildControllersMap.put(UserOptions.WITHDRAW.getOption(), new WithdrawController());
+        buildControllersMap.put(UserOptions.OPEN_ACCOUNT.getOption(), new OpenAccountController());
 
     }
 
@@ -63,15 +81,4 @@ public class Bootstrap {
 
 
 
-    private Map<Integer, Controller> buildControllersMap() {
-
-        Map<Integer, Controller> map = new HashMap<>();
-        map.put(UserOptions.GET_BALANCE.getOption(), new ViewBalanceController());
-        map.put(UserOptions.DEPOSIT.getOption(), new DepositController());
-        map.put(UserOptions.WITHDRAW.getOption(), new WithdrawController());
-        map.put(UserOptions.OPEN_ACCOUNT.getOption(), new OpenAccountController());
-
-        return map;
-
-    }
 }
