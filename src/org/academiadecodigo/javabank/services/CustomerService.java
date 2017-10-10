@@ -10,8 +10,7 @@ import java.util.Set;
 public class CustomerService {
 
     private HashMap<Integer, Customer> customers;
-
-    private int loginCustomer;
+    private AuthenticationService authenticationService;
 
     public CustomerService() {
         this.customers = new HashMap<>();
@@ -22,18 +21,24 @@ public class CustomerService {
     }
 
     public void addAccount(Account account) {
-        customers.get(loginCustomer).getAccounts().put(account.getId(),account);
+        customers.get(authenticationService.getLoginCustomer()).getAccounts().put(account.getId(), account);
+    }
+
+    public Customer getLoginCustomer(){
+        return authenticationService.getLoginCustomer();
     }
 
     public Set<Integer> getCustomerIds() {
         return customers.keySet();
     }
 
-    public Customer getLoginCustomer() {
-        return customers.get(loginCustomer);
+    public HashMap<Integer, Customer> getCustomers() {
+        return customers;
     }
 
-    public void setLoginCustomer(int id) {
-        this.loginCustomer = id;
+    public void setAuthenticationService(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 }
+
+

@@ -1,13 +1,11 @@
 package org.academiadecodigo.javabank.controller;
 
 import org.academiadecodigo.javabank.services.AuthenticationService;
-import org.academiadecodigo.javabank.services.CustomerService;
 
 public class LoginController extends AbstractController {
 
     private Controller nextController;
 
-    private CustomerService customerService;
     private AuthenticationService authenticationService;
 
     public void onLogin(int id) {
@@ -15,7 +13,7 @@ public class LoginController extends AbstractController {
             this.init();
             return;
         }
-        customerService.setLoginCustomer(id);
+        authenticationService.setLoginCustomer(id);
         nextController.init();
     }
 
@@ -27,7 +25,4 @@ public class LoginController extends AbstractController {
         this.nextController = nextController;
     }
 
-    public void setCustomerService(CustomerService customerService) {
-        this.customerService = customerService;
-    }
 }

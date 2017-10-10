@@ -7,8 +7,7 @@ import org.academiadecodigo.javabank.model.account.AccountType;
 
 public class NewAccountController extends AbstractController {
 
-    private CustomerService customerService;
-    private AccountService accountService;
+
     private Integer newAccountId;
 
     @Override
@@ -30,11 +29,4 @@ public class NewAccountController extends AbstractController {
         return newAccountId;
     }
 
-    public void setCustomerService(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
-    public void setAccountService(AccountService accountService) {
-        this.accountService = accountService;
-    }
 }

@@ -1,18 +1,19 @@
 package org.academiadecodigo.javabank.view;
 
-import org.academiadecodigo.bootcamp.scanners.precisiondouble.DoubleInputScanner;
 import org.academiadecodigo.bootcamp.scanners.integer.IntegerSetInputScanner;
+import org.academiadecodigo.bootcamp.scanners.precisiondouble.DoubleInputScanner;
+import org.academiadecodigo.javabank.controller.transaction.AbstractAccountTransactionController;
 import org.academiadecodigo.javabank.controller.transaction.AccountTransactionController;
 import org.academiadecodigo.javabank.model.Customer;
 
 public class AccountTransactionView extends AbstractView {
 
-    private AccountTransactionController transactionController;
+    private AbstractAccountTransactionController transactionController;
 
     @Override
     public void show() {
 
-        if (customerService.getLoginCustomer().getAccountIds().size() == 0) {
+        if (transactionController.getLoginCustomer().getAccountIds().size() == 0) {
             showNoAccounts();
             return;
         }
@@ -34,7 +35,7 @@ public class AccountTransactionView extends AbstractView {
 
         StringBuilder builder = new StringBuilder();
 
-        for (Integer id : customerService.getLoginCustomer().getAccountIds()) {
+        for (Integer id : transactionController.getLoginCustomer().getAccountIds()) {
             builder.append(id);
             builder.append(" ");
         }
@@ -44,7 +45,7 @@ public class AccountTransactionView extends AbstractView {
 
     private int scanAccount() {
 
-        Customer customer = customerService.getLoginCustomer();
+        Customer customer = transactionController.getLoginCustomer();
         IntegerSetInputScanner scanner = new IntegerSetInputScanner(customer.getAccountIds());
         scanner.setMessage(Messages.VIEW_ACCOUNT_TRANSACTION_ACCOUNTID_MESSAGE);
         scanner.setError(Messages.VIEW_ACCOUNT_TRANSACTION_INVALID_ACCOUNT_ERROR);
@@ -60,7 +61,7 @@ public class AccountTransactionView extends AbstractView {
         return prompt.getUserInput(scanner);
     }
 
-    public void setTransactionController(AccountTransactionController transactionController) {
+    public void setTransactionController(AbstractAccountTransactionController transactionController) {
         this.transactionController = transactionController;
     }
 }

@@ -30,6 +30,7 @@ public class Bootstrap {
         customerService.addCustomer(c2);
         customerService.addCustomer(c3);
 
+
         return customerService;
     }
 
@@ -39,6 +40,7 @@ public class Bootstrap {
         Prompt prompt = new Prompt(System.in, System.out);
 
         authenticationService.setCustomerService(customerService);
+        customerService.setAuthenticationService(authenticationService);
 
         // wire login controller and view
         LoginController loginController = new LoginController();
@@ -46,14 +48,14 @@ public class Bootstrap {
         loginController.setView(loginView);
         loginController.setCustomerService(customerService);
         loginController.setAuthenticationService(authenticationService);
-        loginView.setCustomerService(customerService);
+        loginController.setCustomerService(customerService);
         loginView.setLoginController(loginController);
         loginView.setPrompt(prompt);
 
         // wire main controller and view
         MainController mainController = new MainController();
         MainView mainView = new MainView();
-        mainView.setCustomerService(customerService);
+        mainController.setCustomerService(customerService);
         mainView.setPrompt(prompt);
         mainView.setMainController(mainController);
         mainController.setView(mainView);
@@ -62,8 +64,9 @@ public class Bootstrap {
         // wire balance controller and view
         BalanceController balanceController = new BalanceController();
         BalanceView balanceView = new BalanceView();
+        balanceView.setBalanceController(balanceController);
         balanceController.setView(balanceView);
-        balanceView.setCustomerService(customerService);
+        balanceController.setCustomerService(customerService);
 
         // wire new account controller and view
         NewAccountView newAccountView = new NewAccountView();
@@ -82,10 +85,10 @@ public class Bootstrap {
         depositController.setView(depositView);
         withdrawalController.setAccountService(accountService);
         withdrawalController.setView(withdrawView);
-        depositView.setCustomerService(customerService);
+        depositController.setCustomerService(customerService);
         depositView.setPrompt(prompt);
         depositView.setTransactionController(depositController);
-        withdrawView.setCustomerService(customerService);
+        withdrawalController.setCustomerService(customerService);
         withdrawView.setPrompt(prompt);
         withdrawView.setTransactionController(withdrawalController);
 
