@@ -3,6 +3,7 @@ package org.academiadecodigo.javabank;
 import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.javabank.controller.transaction.DepositController;
 import org.academiadecodigo.javabank.controller.transaction.WithdrawalController;
+import org.academiadecodigo.javabank.services.AuthenticationService;
 import org.academiadecodigo.javabank.services.CustomerService;
 import org.academiadecodigo.javabank.view.UserOptions;
 import org.academiadecodigo.javabank.controller.*;
@@ -15,12 +16,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Bootstrap {
+    private CustomerService customerService = new CustomerService();
+    private AccountService accountService = new AccountService();
+    private AuthenticationService authenticationService = new AuthenticationService();
 
     public CustomerService generateTestData() {
 
-        CustomerService customerService = new CustomerService();
-        AccountService accountService = new AccountService();
-        customerService.setAccountService(accountService);
 
         Customer c1 = new Customer(1, "Rui");
         Customer c2 = new Customer(2, "Sergio");
@@ -32,16 +33,19 @@ public class Bootstrap {
         return customerService;
     }
 
-    public LoginController wireObjects(CustomerService customerService) {
+    public LoginController wireObjects() {
 
         // attach all input to standard i/o
         Prompt prompt = new Prompt(System.in, System.out);
+
+        authenticationService.setCustomerService(customerService);
 
         // wire login controller and view
         LoginController loginController = new LoginController();
         LoginView loginView = new LoginView();
         loginController.setView(loginView);
         loginController.setCustomerService(customerService);
+        loginController.setAuthenticationService(authenticationService);
         loginView.setCustomerService(customerService);
         loginView.setLoginController(loginController);
         loginView.setPrompt(prompt);
@@ -67,15 +71,16 @@ public class Bootstrap {
         newAccountController.setCustomerService(customerService);
         newAccountController.setView(newAccountView);
         newAccountView.setNewAccountController(newAccountController);
+        newAccountController.setAccountService(accountService);
 
         // wire account transactions controllers and views
         DepositController depositController = new DepositController();
         WithdrawalController withdrawalController = new WithdrawalController();
         AccountTransactionView depositView = new AccountTransactionView();
         AccountTransactionView withdrawView = new AccountTransactionView();
-        depositController.setCustomerService(customerService);
+        depositController.setAccountService(accountService);
         depositController.setView(depositView);
-        withdrawalController.setCustomerService(customerService);
+        withdrawalController.setAccountService(accountService);
         withdrawalController.setView(withdrawView);
         depositView.setCustomerService(customerService);
         depositView.setPrompt(prompt);
@@ -92,6 +97,8 @@ public class Bootstrap {
         controllerMap.put(UserOptions.WITHDRAW.getOption(), withdrawalController);
 
         mainController.setControllerMap(controllerMap);
+
+
 
         return loginController;
     }

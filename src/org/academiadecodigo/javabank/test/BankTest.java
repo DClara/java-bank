@@ -12,7 +12,6 @@ public class BankTest {
 
         AccountService accountService = new AccountService();
         CustomerService customerService = new CustomerService();
-        customerService.setAccountService(accountService);
 
         Customer c1 = new Customer(1, "Rui");
         Customer c2 = new Customer(2, "Sergio");
@@ -22,16 +21,11 @@ public class BankTest {
         Account a1 = accountService.openAccount(AccountType.CHECKING);
         Account a2 = accountService.openAccount(AccountType.CHECKING);
 
-        c1.addAccount(a1);
-        c2.addAccount(a2);
+        customerService.addAccount(a1);
+        customerService.addAccount(a2);
 
         accountService.deposit(a1.getId(), 100);
         accountService.deposit(a2.getId(), 100);
-
-        // customerService balance should equal sum of all customers balance
-        if (customerService.getBalance() != 200) {
-            return false;
-        }
 
         return true;
     }

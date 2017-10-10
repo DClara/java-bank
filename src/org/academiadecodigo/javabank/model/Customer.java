@@ -17,12 +17,8 @@ public class Customer {
         this.name = name;
     }
 
-    public void addAccount(Account account) {
-        accounts.put(account.getId(), account);
-    }
-
-    public Set<Account> getAccounts() {
-        return new HashSet<>(accounts.values());
+    public Map<Integer, Account> getAccounts() {
+        return accounts;
     }
 
     public double getBalance(int id) {

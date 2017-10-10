@@ -1,5 +1,6 @@
 package org.academiadecodigo.javabank.services;
 
+import org.academiadecodigo.javabank.model.Customer;
 import org.academiadecodigo.javabank.model.account.Account;
 import org.academiadecodigo.javabank.model.account.AccountType;
 import org.academiadecodigo.javabank.factories.AccountFactory;
@@ -50,5 +51,16 @@ public class AccountService {
             srcAccount.debit(amount);
             dstAccount.credit(amount);
         }
+    }
+
+    public double getTotalBalance() {
+
+        double balance = 0;
+
+        for (Account account : accountMap.values()) {
+            balance += account.getBalance();
+        }
+
+        return balance;
     }
 }

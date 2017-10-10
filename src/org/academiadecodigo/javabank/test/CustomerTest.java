@@ -5,12 +5,14 @@ import org.academiadecodigo.javabank.model.Customer;
 import org.academiadecodigo.javabank.model.account.Account;
 import org.academiadecodigo.javabank.model.account.AccountType;
 import org.academiadecodigo.javabank.model.account.SavingsAccount;
+import org.academiadecodigo.javabank.services.CustomerService;
 
 public class CustomerTest {
 
     public boolean test() {
 
         AccountService accountService = new AccountService();
+        CustomerService customerService = new CustomerService();
         Customer customer = new Customer(1, "Rui");
 
         // customer should not contain any accounts
@@ -21,8 +23,8 @@ public class CustomerTest {
         // should be able to open accounts
         Account ac = accountService.openAccount(AccountType.CHECKING);
         Account as = accountService.openAccount(AccountType.SAVINGS);
-        customer.addAccount(ac);
-        customer.addAccount(as);
+        customerService.addAccount(ac);
+        customerService.addAccount(as);
 
         if (customer.getAccountIds().size() != 2) {
             return false;

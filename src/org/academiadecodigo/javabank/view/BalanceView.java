@@ -5,6 +5,7 @@ import org.academiadecodigo.javabank.model.Customer;
 import org.academiadecodigo.javabank.model.account.Account;
 
 import java.text.DecimalFormat;
+import java.util.Map;
 import java.util.Set;
 
 public class BalanceView implements View {
@@ -26,8 +27,8 @@ public class BalanceView implements View {
         Customer customer = customerService.getLoginCustomer();
         System.out.println("\n" + customer.getName() + Messages.VIEW_BALANCE_MESSAGE + "\n");
 
-        Set<Account> accounts = customer.getAccounts();
-        for (Account account : accounts) {
+        Map<Integer, Account> accounts = customer.getAccounts();
+        for (Account account : accounts.values()) {
             System.out.println(account.getId() + "\t" + account.getAccountType() + "\t" + df.format(account.getBalance()));
         }
 
