@@ -1,30 +1,23 @@
 package org.academiadecodigo.javabank.controller;
 
-import org.academiadecodigo.javabank.domain.Bank;
-import org.academiadecodigo.javabank.views.View;
+import org.academiadecodigo.javabank.model.Bank;
 
-public class LoginController implements Controller {
+public class LoginController extends AbstractController {
 
-    private Bank bank;
-    private View view;
     private Controller nextController;
 
-    public LoginController(Bank bank, View view) {
-        this.bank = bank;
-        this.view = view;
-    }
+    private Bank bank;
 
-    @Override
-    public void init() {
-        this.view.show();
-    }
-
-    public void setNextController(Controller controller) {
-        this.nextController = controller;
-    }
-
-    public void setAccessingId(int id) {
-        bank.setAccessingCustomerId(id);
+    public void onLogin(int id) {
+        bank.setLoginCustomer(id);
         nextController.init();
+    }
+
+    public void setNextController(Controller nextController) {
+        this.nextController = nextController;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
     }
 }

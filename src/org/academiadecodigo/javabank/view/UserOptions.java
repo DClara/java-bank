@@ -1,9 +1,4 @@
-package org.academiadecodigo.javabank.application;
-
-import org.academiadecodigo.javabank.application.operations.Operation;
-
-import java.util.HashMap;
-import java.util.Map;
+package org.academiadecodigo.javabank.view;
 
 public enum  UserOptions {
 
@@ -15,7 +10,6 @@ public enum  UserOptions {
 
     private int option;
     private String message;
-    private Map<Integer, Operation> map = new HashMap<>();
 
     public int getOption() {
         return option;

@@ -1,84 +1,98 @@
 package org.academiadecodigo.javabank;
 
-import org.academiadecodigo.javabank.application.UserOptions;
-import org.academiadecodigo.javabank.application.operations.Operation;
+import org.academiadecodigo.bootcamp.Prompt;
+import org.academiadecodigo.javabank.controller.transaction.DepositController;
+import org.academiadecodigo.javabank.controller.transaction.WithdrawalController;
+import org.academiadecodigo.javabank.view.UserOptions;
 import org.academiadecodigo.javabank.controller.*;
-import org.academiadecodigo.javabank.domain.Bank;
-import org.academiadecodigo.javabank.domain.Customer;
-import org.academiadecodigo.javabank.domain.account.Account;
-import org.academiadecodigo.javabank.domain.account.AccountType;
-import org.academiadecodigo.javabank.domain.account.CheckingAccount;
-import org.academiadecodigo.javabank.factories.AccountFactory;
 import org.academiadecodigo.javabank.managers.AccountManager;
-import org.academiadecodigo.javabank.views.BalanceView;
-import org.academiadecodigo.javabank.views.DepositView;
-import org.academiadecodigo.javabank.views.LoginView;
-import org.academiadecodigo.javabank.views.MainMenuView;
+import org.academiadecodigo.javabank.model.Bank;
+import org.academiadecodigo.javabank.model.Customer;
+import org.academiadecodigo.javabank.view.*;
+import org.academiadecodigo.javabank.view.AccountTransactionView;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Bootstrap {
-    private Controller initialController;
-    Map<Integer, Controller> buildControllersMap = new HashMap<>();
 
-    public void populate4test() {
+    public Bank generateTestData() {
+
         Bank bank = new Bank();
         AccountManager accountManager = new AccountManager();
         bank.setAccountManager(accountManager);
 
-
-
-        Customer c1 = new Customer(1,"Rui");
-        Customer c2 = new Customer(2,"Sergio");
-        Customer c3 = new Customer(3,"Bruno");
+        Customer c1 = new Customer(1, "Rui");
+        Customer c2 = new Customer(2, "Sergio");
+        Customer c3 = new Customer(3, "Bruno");
         bank.addCustomer(c1);
         bank.addCustomer(c2);
         bank.addCustomer(c3);
 
-        c1.openAccount(AccountType.CHECKING);
+        return bank;
+    }
 
-        LoginView loginView = new LoginView(bank);
-        LoginController loginController = new LoginController(bank, loginView);
+    public LoginController wireObjects(Bank bank) {
 
-        setInitialController(loginController);
+        // attach all input to standard i/o
+        Prompt prompt = new Prompt(System.in, System.out);
+
+        // wire login controller and view
+        LoginController loginController = new LoginController();
+        LoginView loginView = new LoginView();
+        loginController.setView(loginView);
+        loginController.setBank(bank);
+        loginView.setBank(bank);
         loginView.setLoginController(loginController);
+        loginView.setPrompt(prompt);
 
-        MainMenuView mainMenuView = new MainMenuView(bank);
-        MainMenuController mainMenuController = new MainMenuController(bank, mainMenuView);
-        loginController.setNextController(mainMenuController);
-        mainMenuView.setMainMenuController(mainMenuController);
+        // wire main controller and view
+        MainController mainController = new MainController();
+        MainView mainView = new MainView();
+        mainView.setBank(bank);
+        mainView.setPrompt(prompt);
+        mainView.setMainController(mainController);
+        mainController.setView(mainView);
+        loginController.setNextController(mainController);
 
-        mainMenuController.setControllersMap(buildControllersMap);
+        // wire balance controller and view
+        BalanceController balanceController = new BalanceController();
+        BalanceView balanceView = new BalanceView();
+        balanceController.setView(balanceView);
+        balanceView.setBank(bank);
 
-        BalanceView balanceView = new BalanceView(bank);
-        ViewBalanceController viewBalanceController = new ViewBalanceController(bank);
-        viewBalanceController.setView(balanceView);
-        balanceView.setViewBalanceController(viewBalanceController);
-        viewBalanceController.setNextController(mainMenuController);
+        // wire new account controller and view
+        NewAccountView newAccountView = new NewAccountView();
+        NewAccountController newAccountController = new NewAccountController();
+        newAccountController.setBank(bank);
+        newAccountController.setView(newAccountView);
+        newAccountView.setNewAccountController(newAccountController);
 
-        DepositView depositView = new DepositView(bank);
-        DepositController depositController = new DepositController(bank);
+        // wire account transactions controllers and views
+        DepositController depositController = new DepositController();
+        WithdrawalController withdrawalController = new WithdrawalController();
+        AccountTransactionView depositView = new AccountTransactionView();
+        AccountTransactionView withdrawView = new AccountTransactionView();
+        depositController.setBank(bank);
         depositController.setView(depositView);
-        depositView.setDepositController(depositController);
-        depositController.setNextController(mainMenuController);
+        withdrawalController.setBank(bank);
+        withdrawalController.setView(withdrawView);
+        depositView.setBank(bank);
+        depositView.setPrompt(prompt);
+        depositView.setTransactionController(depositController);
+        withdrawView.setBank(bank);
+        withdrawView.setPrompt(prompt);
+        withdrawView.setTransactionController(withdrawalController);
 
+        // setup the controller map
+        Map<Integer, Controller> controllerMap = new HashMap<>();
+        controllerMap.put(UserOptions.GET_BALANCE.getOption(), balanceController);
+        controllerMap.put(UserOptions.OPEN_ACCOUNT.getOption(), newAccountController);
+        controllerMap.put(UserOptions.DEPOSIT.getOption(), depositController);
+        controllerMap.put(UserOptions.WITHDRAW.getOption(), withdrawalController);
 
-        buildControllersMap.put(UserOptions.GET_BALANCE.getOption(), viewBalanceController);
-        buildControllersMap.put(UserOptions.DEPOSIT.getOption(), depositController);
-        buildControllersMap.put(UserOptions.WITHDRAW.getOption(), new WithdrawController());
-        buildControllersMap.put(UserOptions.OPEN_ACCOUNT.getOption(), new OpenAccountController());
+        mainController.setControllerMap(controllerMap);
 
+        return loginController;
     }
-
-    public Controller getInitialController() {
-        return initialController;
-    }
-
-    public void setInitialController(Controller initialController) {
-        this.initialController = initialController;
-    }
-
-
-
 }
