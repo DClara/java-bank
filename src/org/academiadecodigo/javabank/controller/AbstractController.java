@@ -1,24 +1,12 @@
 package org.academiadecodigo.javabank.controller;
 
-import org.academiadecodigo.javabank.model.Customer;
-import org.academiadecodigo.javabank.services.AccountService;
-import org.academiadecodigo.javabank.services.CustomerService;
+import org.academiadecodigo.javabank.services.AuthService;
 import org.academiadecodigo.javabank.view.View;
 
 public abstract class AbstractController implements Controller {
 
+    protected AuthService authService;
     protected View view;
-    protected CustomerService customerService;
-    protected AccountService accountService;
-
-    public void setAccountService(AccountService accountService) {
-        this.accountService = accountService;
-    }
-
-    public void setCustomerService(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
 
     public void setView(View view) {
         this.view = view;
@@ -29,7 +17,7 @@ public abstract class AbstractController implements Controller {
         view.show();
     }
 
-    public Customer getLoginCustomer() {
-        return customerService.getLoginCustomer();
+    public void setAuthService(AuthService authService) {
+        this.authService = authService;
     }
 }

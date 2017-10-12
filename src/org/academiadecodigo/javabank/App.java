@@ -1,12 +1,11 @@
 package org.academiadecodigo.javabank;
 
 import org.academiadecodigo.javabank.controller.LoginController;
-import org.academiadecodigo.javabank.model.Customer;
-import org.academiadecodigo.javabank.services.AccountService;
-import org.academiadecodigo.javabank.services.CustomerService;
+import org.academiadecodigo.javabank.services.AccountServiceImpl;
+import org.academiadecodigo.javabank.services.AuthServiceImpl;
+import org.academiadecodigo.javabank.services.CustomerServiceImpl;
 
 public class App {
-
 
     public static void main(String[] args) {
 
@@ -18,14 +17,15 @@ public class App {
     private void bootStrap() {
 
         Bootstrap bootstrap = new Bootstrap();
+        bootstrap.setAuthService(new AuthServiceImpl());
+        bootstrap.setAccountService(new AccountServiceImpl());
+        bootstrap.setCustomerService(new CustomerServiceImpl());
+        bootstrap.loadCustomers();
 
         LoginController loginController = bootstrap.wireObjects();
-
-        bootstrap.generateTestData();
 
         // start application
         loginController.init();
 
     }
-
 }

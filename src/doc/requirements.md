@@ -38,7 +38,7 @@ Represents the Banking service, contains costumers
 * Customer
 
 ### Customer
-Represents customerService customers, contains accounts
+Represents bank customers, contains accounts
 
 #### Responsibilities
 * add a new account
@@ -64,12 +64,15 @@ Represents a Bank Account, contains money
 * Composition and delegation used with AccountManager containing and performing all account related operations (less responsibility to customer)
 * Account and Customer objects are stored in Map container for quick and convenient access
 * AccountFactory decouples Account usage from Account creation logic
-* Strategy pattern used for executing multiple customerService operations and account transaction operations
+* Strategy pattern used for executing multiple bank operations and account transaction operations
 * Console based user interface implemented using the propmt-view lib
 * MVC architecture 
+* Service layer for abstracting the domain model to the controllers
 
 ### MVC notes
-In classic MVC the Model notifies the view for changes, but it is also correct to
+ In classic MVC the Model notifies the view for changes, but it is also correct to
 have the view reading the model, either directly or indirectly via the controller.
-What can not happen is for the view to update the model directly. 
-Model updates must always be done via the controller.
+What can not happen is for the view to update the model directly. Model updates must always be done via the controller.
+
+With the introduction of a service layer abstracting the domain model and providing a clean API to the controllers,
+all views now fetch data from controllers only, making this setup more like an MVP

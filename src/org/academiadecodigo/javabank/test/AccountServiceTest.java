@@ -1,17 +1,26 @@
 package org.academiadecodigo.javabank.test;
 
+import org.academiadecodigo.javabank.model.account.CheckingAccount;
 import org.academiadecodigo.javabank.services.AccountService;
 import org.academiadecodigo.javabank.model.account.Account;
 import org.academiadecodigo.javabank.model.account.AccountType;
 import org.academiadecodigo.javabank.model.account.SavingsAccount;
+import org.academiadecodigo.javabank.services.AccountServiceImpl;
 
-public class AccountManagerTest {
+public class AccountServiceTest {
 
     public boolean test() {
 
-        AccountService accountService = new AccountService();
-        Account ac = accountService.openAccount(AccountType.CHECKING);
-        Account as = accountService.openAccount(AccountType.SAVINGS);
+        AccountService accountService = new AccountServiceImpl();
+        Account ac = new CheckingAccount();
+        Account as =  new SavingsAccount();
+        accountService.add(ac);
+        accountService.add(as);
+
+        // should add ids
+        if (ac.getId() == null || as.getId() == null) {
+            return false;
+        }
 
         // should be able to deposit
         accountService.deposit(ac.getId(), 10);
