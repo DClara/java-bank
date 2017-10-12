@@ -24,7 +24,15 @@ public class LoginControllerTest {
     }
 
     @Test
+    public void initTest() {
+        loginController.init();
+        verify(view).show();
+    }
+
+    @Test
     public void onLoginSuccess() {
+        int fakeId = 973;
+
         Controller nextController = mock(Controller.class);
         loginController.setNextController(nextController);
 
@@ -32,11 +40,12 @@ public class LoginControllerTest {
         loginController.setAuthService(auth);
 
         // if authenticate method is called with "rui" and "ferrao", the mock returns true
-        when(auth.authenticate(1)).thenReturn(true);
-        loginController.onLogin(1);
+        when(auth.authenticate(fakeId)).thenReturn(true);
+        loginController.onLogin(fakeId);
 
         // verify that authenticate method has been called with the correct arguments
         verify(nextController).init();
+        verify(view, never()).show();
     }
 
     @Test
@@ -55,9 +64,5 @@ public class LoginControllerTest {
 
     }
 
-    @Test
-    public void initTest() {
-        loginController.init();
-        verify(view).show();
-    }
+
 }
