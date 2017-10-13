@@ -1,11 +1,13 @@
 package org.academiadecodigo.javabank;
 
 import org.academiadecodigo.javabank.controller.LoginController;
+import org.academiadecodigo.javabank.model.Customer;
 import org.academiadecodigo.javabank.persistence.H2WebServer;
 import org.academiadecodigo.javabank.services.AccountServiceImpl;
 import org.academiadecodigo.javabank.services.AuthServiceImpl;
 import org.academiadecodigo.javabank.services.CustomerServiceImpl;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.sql.SQLException;
@@ -19,6 +21,10 @@ public class App {
             h2WebServer.start();
 
             EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.PERSISTENCE_UNIT);
+
+            //EntityManager em = emf.createEntityManager();
+            //em.find(Customer.class, 1);
+            //em.close();
 
             App app = new App();
             app.bootStrap();
