@@ -7,9 +7,6 @@ import org.academiadecodigo.javabank.view.View;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.mockito.Mockito.*;
 
 public class MainControllerTest {
@@ -30,12 +27,6 @@ public class MainControllerTest {
         Controller c2 = mock(Controller.class);
     }
 
-    @Test
-    public void onMenuSelectionQuit() {
-        mainController.onMenuSelection(UserOptions.QUIT.getOption());
-
-        verify(view, never()).show();
-    }
 
 
 }
