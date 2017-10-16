@@ -2,21 +2,12 @@ package org.academiadecodigo.javabank.services;
 
 import org.academiadecodigo.javabank.model.Customer;
 
-import java.util.List;
 import java.util.Set;
 
-public interface CustomerService {
+public interface CustomerService extends CRUDService<Customer> {
 
-    void add(Customer customer);
+    double getBalance(Integer id);
 
-    Customer findById(Integer id);
-
-    List<Customer> findAll();
-
-    Set<Integer> getCustomerIds();
-
-    double getBalance(int customerId);
-
-    Set<Integer> getCustomerAccountNumbers(Integer id);
+    Set<Integer> getCustomerAccountIds(Integer id);
 
 }

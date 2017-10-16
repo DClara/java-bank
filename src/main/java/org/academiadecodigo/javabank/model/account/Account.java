@@ -15,14 +15,6 @@ public abstract class Account extends AbstractModel {
     @ManyToOne
     private Customer customer;
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
     public void credit(double amount) {
         if (canCredit(amount)) {
             balance += amount;
@@ -49,4 +41,19 @@ public abstract class Account extends AbstractModel {
         return amount > 0;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "balance=" + balance +
+                ", customerId=" + (customer != null ? customer.getId() : null) +
+                "} " + super.toString();
+    }
 }

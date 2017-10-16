@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @MappedSuperclass
-public class AbstractModel implements Model {
+public abstract class AbstractModel implements Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +32,12 @@ public class AbstractModel implements Model {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "Model{" +
+                "id=" + id +
+                ", creationTime=" + creationTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
 }

@@ -6,7 +6,9 @@ import org.academiadecodigo.javabank.controller.transaction.DepositController;
 import org.academiadecodigo.javabank.controller.transaction.WithdrawalController;
 import org.academiadecodigo.javabank.factories.AccountFactory;
 import org.academiadecodigo.javabank.model.Customer;
-import org.academiadecodigo.javabank.services.*;
+import org.academiadecodigo.javabank.services.AccountService;
+import org.academiadecodigo.javabank.services.CustomerService;
+import org.academiadecodigo.javabank.services.AuthServiceImpl;
 import org.academiadecodigo.javabank.view.*;
 
 import java.util.HashMap;
@@ -14,25 +16,11 @@ import java.util.Map;
 
 public class Bootstrap {
 
-    private AuthServiceMock authService;
+    private AuthServiceImpl authService;
     private CustomerService customerService;
-    private AccountServiceMock accountService;
+    private AccountService accountService;
 
-    public void loadCustomers() {
-
-        Customer c1 = new Customer();
-        Customer c2 = new Customer();
-        Customer c3 = new Customer();
-        c1.setName("Rui");
-        c2.setName("Sergio");
-        c3.setName("Bruno");
-        customerService.add(c1);
-        customerService.add(c2);
-        customerService.add(c3);
-
-    }
-
-    public LoginController wireObjects() {
+    public Controller wireObjects() {
 
         // attach all input to standard i/o
         Prompt prompt = new Prompt(System.in, System.out);
@@ -104,19 +92,15 @@ public class Bootstrap {
         return loginController;
     }
 
-    public void setAuthService(AuthServiceMock authService) {
+    public void setAuthService(AuthServiceImpl authService) {
         this.authService = authService;
     }
 
-    public void setCustomerService(CustomerServiceMock customerService) {
+    public void setCustomerService(CustomerService customerService) {
         this.customerService = customerService;
     }
 
-    public  void setCustomerService(JPACustomerService customerService) {
-        this.customerService = customerService;
-    }
-
-    public void setAccountService(AccountServiceMock accountService) {
+    public void setAccountService(AccountService accountService) {
         this.accountService = accountService;
     }
 }

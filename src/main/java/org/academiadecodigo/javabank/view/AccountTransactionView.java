@@ -1,7 +1,7 @@
 package org.academiadecodigo.javabank.view;
 
-import org.academiadecodigo.bootcamp.scanners.precisiondouble.DoubleInputScanner;
 import org.academiadecodigo.bootcamp.scanners.integer.IntegerSetInputScanner;
+import org.academiadecodigo.bootcamp.scanners.precisiondouble.DoubleInputScanner;
 import org.academiadecodigo.javabank.controller.transaction.AccountTransactionController;
 
 public class AccountTransactionView extends AbstractView {

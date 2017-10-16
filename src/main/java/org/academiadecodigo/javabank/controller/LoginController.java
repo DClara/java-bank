@@ -10,7 +10,9 @@ public class LoginController extends AbstractController {
             nextController.init();
             return;
         }
+
         init();
+
     }
 
     public void setNextController(Controller nextController) {
