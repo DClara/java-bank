@@ -4,7 +4,7 @@ import org.academiadecodigo.javabank.model.Customer;
 import org.academiadecodigo.javabank.model.account.Account;
 import org.academiadecodigo.javabank.model.account.CheckingAccount;
 import org.academiadecodigo.javabank.services.CustomerService;
-import org.academiadecodigo.javabank.services.CustomerServiceImpl;
+import org.academiadecodigo.javabank.services.CustomerServiceMock;
 
 import java.util.Set;
 
@@ -12,7 +12,7 @@ public class CustomerServiceTest {
 
     public boolean test() {
 
-        CustomerService customerService = new CustomerServiceImpl();
+        CustomerService customerService = new CustomerServiceMock();
         Customer c1 = new Customer();
         Customer c2 = new Customer();
         c1.setName("Rui");

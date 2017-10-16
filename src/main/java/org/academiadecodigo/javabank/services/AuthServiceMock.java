@@ -2,10 +2,13 @@ package org.academiadecodigo.javabank.services;
 
 import org.academiadecodigo.javabank.model.Customer;
 
-public class AuthServiceImpl implements AuthService {
+import javax.persistence.EntityManagerFactory;
+
+public class AuthServiceMock implements AuthService {
 
     private Customer accesingCustomer;
     private CustomerService customerService;
+
 
     @Override
     public boolean authenticate(Integer id) {

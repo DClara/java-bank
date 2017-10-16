@@ -3,15 +3,14 @@ package org.academiadecodigo.javabank.test;
 import org.academiadecodigo.javabank.model.account.CheckingAccount;
 import org.academiadecodigo.javabank.services.AccountService;
 import org.academiadecodigo.javabank.model.account.Account;
-import org.academiadecodigo.javabank.model.account.AccountType;
 import org.academiadecodigo.javabank.model.account.SavingsAccount;
-import org.academiadecodigo.javabank.services.AccountServiceImpl;
+import org.academiadecodigo.javabank.services.AccountServiceMock;
 
 public class AccountServiceTest {
 
     public boolean test() {
 
-        AccountService accountService = new AccountServiceImpl();
+        AccountService accountService = new AccountServiceMock();
         Account ac = new CheckingAccount();
         Account as =  new SavingsAccount();
         accountService.add(ac);
