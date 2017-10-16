@@ -1,11 +1,11 @@
 package org.academiadecodigo.javabank.persistence.jpa;
 
-import org.academiadecodigo.javabank.persistence.SessionManager;
+import org.academiadecodigo.javabank.persistence.AbstractTransactionManager;
 import org.academiadecodigo.javabank.persistence.TransactionManager;
 
-public class JpaTransactionManager extends TransactionManager {
+public class JpaTransactionManager extends AbstractTransactionManager {
 
-    public JpaTransactionManager (SessionManager sm) {
+    public JpaTransactionManager (JpaSessionManager sm) {
         super (sm);
     }
 

@@ -1,4 +1,4 @@
 package org.academiadecodigo.javabank.persistence.dao;
 
-public class AccountData {
+public class AccountData extends AbstractDao {
 }

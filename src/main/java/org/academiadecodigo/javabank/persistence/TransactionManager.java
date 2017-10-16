@@ -1,20 +1,12 @@
 package org.academiadecodigo.javabank.persistence;
 
+public interface TransactionManager {
 
-// allows services to use common semantics for read/write operations
-public abstract class TransactionManager {
+    void beginRead();
 
-    protected SessionManager sm;
+    void beginWrite();
 
-    public TransactionManager (SessionManager sm) {
-        this.sm = sm;
-    }
+    void commit();
 
-    public abstract void beginRead();
-
-    public abstract void beginWrite();
-
-    public abstract void commit();
-
-    public abstract void rollback();
+    void rollback();
 }

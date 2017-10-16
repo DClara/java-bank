@@ -7,12 +7,12 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public abstract class GenericDao <T> {
+public abstract class AbstractDao<T> implements Dao {
 
         protected EntityManagerFactory emf;
         private Class<T> modelType;
 
-        public AbstractJpaService(EntityManagerFactory emf, Class<T> modelType) {
+        public AbstractDao(EntityManagerFactory emf, Class<T> modelType) {
             this.emf = emf;
             this.modelType = modelType;
         }
