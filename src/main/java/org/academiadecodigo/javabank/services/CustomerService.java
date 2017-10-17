@@ -11,4 +11,7 @@ public interface CustomerService {
 
     Set<Integer> getCustomerAccountIds(Integer id);
 
+    Customer findById(Integer id);
+
+
 }

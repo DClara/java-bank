@@ -9,6 +9,7 @@ import org.academiadecodigo.javabank.services.CustomerService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -90,5 +91,29 @@ public class CustomerServiceImpl implements CustomerService {
         return accountIds;
 
     }
+
+    @Override
+    public Customer findById(Integer id) {
+
+
+        try {
+            tm.beginRead();
+            Customer c1 = dao.findById(id);
+
+            if (c1 == null) {
+                tm.rollback();
+                throw new IllegalArgumentException("Customer does not exists");
+            }
+
+            tm.commit();
+            return c1;
+
+
+        } catch (TransactionException ex) {
+            tm.rollback();
+        }
+        return null;
+    }
+
 
 }

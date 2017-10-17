@@ -21,6 +21,24 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public int add(Account account) {
+
+        try {
+
+            tm.beginWrite();
+            Account toUpdate = dao.saveOrUpdate(account);
+            tm.commit();
+            return toUpdate.getId();
+
+        } catch (TransactionException ex) {
+
+            tm.rollback();
+
+        }
+        return 0;
+    }
+
+    @Override
     public void deposit(Integer id, double amount) {
 
         try {

@@ -51,8 +51,8 @@ public class App {
         CustomerDao customerDao = new JpaCustomerDao(sm);
 
         bootstrap.setAuthService(new AuthServiceImpl());
-        bootstrap.setAccountService(new AccountServiceImpl(accountDao, tm));
-        bootstrap.setCustomerService(new CustomerServiceImpl(customerDao, tm));
+        bootstrap.setAccountService(new AccountServiceImpl(accountDao,tm));
+        bootstrap.setCustomerService(new CustomerServiceImpl(customerDao,tm));
 
         Controller controller = bootstrap.wireObjects();
 

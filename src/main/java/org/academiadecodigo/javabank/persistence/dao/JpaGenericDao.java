@@ -61,11 +61,7 @@ public abstract class JpaGenericDao <T extends AbstractModel> implements Dao <T>
 
             try {
 
-                em.getTransaction().begin();
-                T savedObject = em.merge(modelObject);
-                em.getTransaction().commit();
-
-                return savedObject;
+                return em.merge(modelObject);
 
             } catch (RollbackException ex) {
 
@@ -81,9 +77,7 @@ public abstract class JpaGenericDao <T extends AbstractModel> implements Dao <T>
 
             try {
 
-                em.getTransaction().begin();
                 em.remove(em.find(modelType, id));
-                em.getTransaction().commit();
 
             } catch (RollbackException ex) {
 

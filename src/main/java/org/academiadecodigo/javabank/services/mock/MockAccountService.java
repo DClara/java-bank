@@ -31,4 +31,8 @@ public class MockAccountService extends AbstractMockService<Account> implements 
             dstAccount.credit(amount);
         }
     }
+
+    public int add(Account account) {
+        return (super.saveOrUpdate(account)).getId();
+    }
 }

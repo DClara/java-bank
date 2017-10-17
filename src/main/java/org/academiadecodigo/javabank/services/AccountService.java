@@ -10,4 +10,6 @@ public interface AccountService {
 
     void transfer(Integer srcId, Integer dstId, double amount);
 
+    int add(Account account);
+
 }
