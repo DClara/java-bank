@@ -12,15 +12,15 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class JpaAccountServiceIntegrationTest extends JpaIntegrationTestHelper {
+public class AccountServiceImplIntegrationTest extends JpaIntegrationTestHelper {
 
     private final static Integer INVALID_ID = 9999;
     private final static double DOUBLE_DELTA = 0.1;
-    private JpaAccountService as;
+    private AccountServiceImpl as;
 
     @Before
     public void setup() {
-        as = new JpaAccountService(emf);
+        as = new AccountServiceImpl(emf);
     }
 
 

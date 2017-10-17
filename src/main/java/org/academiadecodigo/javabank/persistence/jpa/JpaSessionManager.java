@@ -1,20 +1,18 @@
 package org.academiadecodigo.javabank.persistence.jpa;
 
-import org.academiadecodigo.javabank.persistence.SessionManager;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 // responsible for managing the Session lifecycle
-public class JpaSessionManager extends SessionManager {
+public class JpaSessionManager {
 
-        private EntityManager em; // the persistence context
+        protected EntityManagerFactory emf;
+        protected EntityManager em;
 
         public JpaSessionManager (EntityManagerFactory emf) {
-            super (emf);
+            this.emf = emf;
         }
 
-        @Override
         public void startSession() {
 
             if (em == null) {
@@ -22,7 +20,6 @@ public class JpaSessionManager extends SessionManager {
             }
         }
 
-        @Override
         public void stopSession() {
 
             if (em != null) {
@@ -35,6 +32,10 @@ public class JpaSessionManager extends SessionManager {
         public EntityManager getCurrentSession() {
             startSession();
             return em;
+        }
+
+        public void setEm(EntityManager em) {
+            this.em = em;
         }
 }
 

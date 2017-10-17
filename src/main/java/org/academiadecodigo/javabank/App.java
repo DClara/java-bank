@@ -2,11 +2,16 @@ package org.academiadecodigo.javabank;
 
 import org.academiadecodigo.javabank.controller.Controller;
 import org.academiadecodigo.javabank.persistence.H2WebServer;
-import org.academiadecodigo.javabank.services.jpa.JpaAccountService;
-import org.academiadecodigo.javabank.services.jpa.JpaCustomerService;
+import org.academiadecodigo.javabank.persistence.TransactionManager;
+import org.academiadecodigo.javabank.persistence.dao.AccountDao;
+import org.academiadecodigo.javabank.persistence.dao.CustomerDao;
+import org.academiadecodigo.javabank.persistence.dao.JpaAccountDao;
+import org.academiadecodigo.javabank.persistence.dao.JpaCustomerDao;
+import org.academiadecodigo.javabank.persistence.jpa.JpaSessionManager;
+import org.academiadecodigo.javabank.persistence.jpa.JpaTransactionManager;
+import org.academiadecodigo.javabank.services.jpa.AccountServiceImpl;
+import org.academiadecodigo.javabank.services.jpa.CustomerServiceImpl;
 import org.academiadecodigo.javabank.services.AuthServiceImpl;
-import org.academiadecodigo.javabank.services.mock.MockAccountService;
-import org.h2.tools.Server;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -39,9 +44,15 @@ public class App {
 
         Bootstrap bootstrap = new Bootstrap();
 
+        JpaSessionManager sm = new JpaSessionManager(emf);
+        TransactionManager tm = new JpaTransactionManager(sm);
+
+        AccountDao accountDao = new JpaAccountDao(sm);
+        CustomerDao customerDao = new JpaCustomerDao(sm);
+
         bootstrap.setAuthService(new AuthServiceImpl());
-        bootstrap.setAccountService(new JpaAccountService(emf));
-        bootstrap.setCustomerService(new JpaCustomerService(emf));
+        bootstrap.setAccountService(new AccountServiceImpl(accountDao, tm));
+        bootstrap.setCustomerService(new CustomerServiceImpl(customerDao, tm));
 
         Controller controller = bootstrap.wireObjects();
 

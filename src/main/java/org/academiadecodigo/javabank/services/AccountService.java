@@ -2,7 +2,7 @@ package org.academiadecodigo.javabank.services;
 
 import org.academiadecodigo.javabank.model.account.Account;
 
-public interface AccountService extends CRUDService<Account> {
+public interface AccountService {
 
     void deposit(Integer id, double amount);
 

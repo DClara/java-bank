@@ -14,18 +14,18 @@ import java.util.Set;
 
 import static org.junit.Assert.*;
 
-public class JpaCustomerServiceIntegrationTest extends JpaIntegrationTestHelper {
+public class CustomerServiceImplIntegrationTest extends JpaIntegrationTestHelper {
 
     private final static Integer INVALID_ID = 9999;
     private final static double DOUBLE_DELTA = 0.1;
 
-    private JpaCustomerService cs;
+    private CustomerServiceImpl cs;
     private EntityManager em;
 
     @Before
     public void setUp() {
 
-        cs = new JpaCustomerService(emf);
+        cs = new CustomerServiceImpl(emf);
         em = emf.createEntityManager();
     }
 

@@ -1,12 +1,14 @@
 package org.academiadecodigo.javabank.persistence;
 
 
+import org.academiadecodigo.javabank.persistence.jpa.JpaSessionManager;
+
 // allows services to use common semantics for read/write operations
 public abstract class TransactionManager {
 
-    protected SessionManager sm;
+    protected JpaSessionManager sm;
 
-    public TransactionManager (SessionManager sm) {
+    public TransactionManager (JpaSessionManager sm) {
         this.sm = sm;
     }
 

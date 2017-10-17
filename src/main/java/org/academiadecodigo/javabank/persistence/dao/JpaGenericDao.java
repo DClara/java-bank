@@ -1,60 +1,63 @@
 package org.academiadecodigo.javabank.persistence.dao;
 
+import org.academiadecodigo.javabank.exception.TransactionException;
+import org.academiadecodigo.javabank.model.AbstractModel;
+import org.academiadecodigo.javabank.persistence.jpa.JpaSessionManager;
+import org.hibernate.HibernateException;
+
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.RollbackException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public abstract class GenericDao <T> {
+public abstract class JpaGenericDao <T extends AbstractModel> implements Dao <T> {
 
-        protected EntityManagerFactory emf;
+        protected JpaSessionManager sm;
         private Class<T> modelType;
 
-        public AbstractJpaService(EntityManagerFactory emf, Class<T> modelType) {
-            this.emf = emf;
+        public JpaGenericDao(JpaSessionManager sm, Class<T> modelType) {
+            this.sm = sm;
             this.modelType = modelType;
         }
 
         @Override
         public List<T> findAll() {
 
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = sm.getCurrentSession();
 
             try {
-
                 CriteriaQuery<T> criteriaQuery = em.getCriteriaBuilder().createQuery(modelType);
                 Root<T> root = criteriaQuery.from(modelType);
                 return em.createQuery(criteriaQuery).getResultList();
+            } catch (HibernateException ex) {
 
-            } finally {
-                if (em != null) {
-                    em.close();
-                }
+                throw new TransactionException();
+
             }
+
         }
 
         @Override
         public T findById(Integer id) {
 
-            EntityManager em = emf.createEntityManager();
-
             try {
 
+                EntityManager em = sm.getCurrentSession();
                 return em.find(modelType, id);
 
-            } finally {
-                if (em != null) {
-                    em.close();
-                }
+            } catch (HibernateException ex) {
+
+                throw new TransactionException();
+
             }
+
         }
 
         @Override
         public T saveOrUpdate(T modelObject) {
 
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = sm.getCurrentSession();
 
             try {
 
@@ -66,20 +69,15 @@ public abstract class GenericDao <T> {
 
             } catch (RollbackException ex) {
 
-                em.getTransaction().rollback();
-                return null;
+                throw new TransactionException();
 
-            } finally {
-                if (em != null) {
-                    em.close();
-                }
             }
         }
 
         @Override
         public void delete(Integer id) {
 
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = sm.getCurrentSession();
 
             try {
 
@@ -89,14 +87,10 @@ public abstract class GenericDao <T> {
 
             } catch (RollbackException ex) {
 
-                em.getTransaction().rollback();
+                throw new TransactionException();
 
-            } finally {
-                if (em != null) {
-                    em.close();
-                }
             }
         }
     }
 
-}
+
