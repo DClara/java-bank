@@ -5,13 +5,12 @@ import org.academiadecodigo.javabank.controller.*;
 import org.academiadecodigo.javabank.controller.transaction.DepositController;
 import org.academiadecodigo.javabank.controller.transaction.WithdrawalController;
 import org.academiadecodigo.javabank.factories.AccountFactory;
-import org.academiadecodigo.javabank.persistence.TransactionManager;
+import org.academiadecodigo.javabank.model.Customer;
 import org.academiadecodigo.javabank.services.AccountService;
-import org.academiadecodigo.javabank.services.AuthServiceImpl;
 import org.academiadecodigo.javabank.services.CustomerService;
+import org.academiadecodigo.javabank.services.AuthServiceImpl;
 import org.academiadecodigo.javabank.view.*;
 
-import javax.persistence.EntityManagerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,9 +19,6 @@ public class Bootstrap {
     private AuthServiceImpl authService;
     private CustomerService customerService;
     private AccountService accountService;
-    private TransactionManager tm;
-    private EntityManagerFactory emf;
-
 
     public Controller wireObjects() {
 
@@ -84,8 +80,6 @@ public class Bootstrap {
         withdrawView.setPrompt(prompt);
         withdrawView.setTransactionController(withdrawalController);
 
-
-
         // setup the controller map
         Map<Integer, Controller> controllerMap = new HashMap<>();
         controllerMap.put(UserOptions.GET_BALANCE.getOption(), balanceController);
@@ -109,9 +103,4 @@ public class Bootstrap {
     public void setAccountService(AccountService accountService) {
         this.accountService = accountService;
     }
-
-    public void setTm(TransactionManager tm) {
-        this.tm = tm;
-    }
-
 }

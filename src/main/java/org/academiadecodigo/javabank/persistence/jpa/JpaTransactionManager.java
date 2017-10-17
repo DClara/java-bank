@@ -2,24 +2,24 @@ package org.academiadecodigo.javabank.persistence.jpa;
 
 import org.academiadecodigo.javabank.persistence.TransactionManager;
 
-public class JpaTransactionManager extends TransactionManager {
+public class JpaTransactionManager implements TransactionManager {
 
-    public JpaTransactionManager (JpaSessionManager sm) {
-        super (sm);
+    private JpaSessionManager sm;
+
+    public JpaTransactionManager(JpaSessionManager sm) {
+        this.sm = sm;
     }
 
-    @Override
     public void beginRead() {
-        sm.startSession();
+       sm.startSession();
     }
 
-    @Override
     public void beginWrite() {
         sm.getCurrentSession().getTransaction().begin();
     }
 
-    @Override
     public void commit() {
+
         if (sm.getCurrentSession().getTransaction().isActive()) {
             sm.getCurrentSession().getTransaction().commit();
         }
@@ -27,14 +27,12 @@ public class JpaTransactionManager extends TransactionManager {
         sm.stopSession();
     }
 
-    @Override
     public void rollback() {
+
         if (sm.getCurrentSession().getTransaction().isActive()) {
             sm.getCurrentSession().getTransaction().rollback();
         }
 
         sm.stopSession();
     }
-
-
 }

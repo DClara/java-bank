@@ -2,9 +2,10 @@ package org.academiadecodigo.javabank.persistence.dao;
 
 import org.academiadecodigo.javabank.model.Customer;
 
-import java.util.Set;
+import java.util.List;
 
 public interface CustomerDao extends Dao<Customer> {
 
-    Set<Integer> getCustomerAccountIds(Integer id);
+    List<Integer> getCustomerIds();
+
 }

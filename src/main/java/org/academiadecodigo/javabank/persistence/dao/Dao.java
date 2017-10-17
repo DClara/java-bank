@@ -1,10 +1,10 @@
 package org.academiadecodigo.javabank.persistence.dao;
 
-import org.academiadecodigo.javabank.model.AbstractModel;
+import org.academiadecodigo.javabank.model.Model;
 
 import java.util.List;
 
-public interface Dao<T extends AbstractModel> {
+public interface Dao<T extends Model> {
 
     List<T> findAll();
 

@@ -1,22 +1,13 @@
 package org.academiadecodigo.javabank.persistence;
 
+public interface TransactionManager {
 
-import org.academiadecodigo.javabank.persistence.jpa.JpaSessionManager;
+    void beginRead();
 
-// allows services to use common semantics for read/write operations
-public abstract class TransactionManager {
+    void beginWrite();
 
-    protected JpaSessionManager sm;
+    void commit();
 
-    public TransactionManager (JpaSessionManager sm) {
-        this.sm = sm;
-    }
+    void rollback();
 
-    public abstract void beginRead();
-
-    public abstract void beginWrite();
-
-    public abstract void commit();
-
-    public abstract void rollback();
 }

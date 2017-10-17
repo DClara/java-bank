@@ -1,41 +1,41 @@
 package org.academiadecodigo.javabank.persistence.jpa;
 
+import org.academiadecodigo.javabank.persistence.SessionManager;
+import org.hibernate.Session;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-// responsible for managing the Session lifecycle
-public class JpaSessionManager {
+public class JpaSessionManager implements SessionManager<EntityManager> {
 
-        protected EntityManagerFactory emf;
-        protected EntityManager em;
+    private EntityManagerFactory emf;
+    private EntityManager em;
 
-        public JpaSessionManager (EntityManagerFactory emf) {
-            this.emf = emf;
+    public JpaSessionManager(EntityManagerFactory emf) {
+        this.emf = emf;
+    }
+
+    @Override
+    public void startSession() {
+
+        if (em == null) {
+            em = emf.createEntityManager();
+        }
+    }
+
+    @Override
+    public void stopSession() {
+
+        if (em != null) {
+            em.close();
         }
 
-        public void startSession() {
+        em = null;
+    }
 
-            if (em == null) {
-                em = emf.createEntityManager();
-            }
-        }
-
-        public void stopSession() {
-
-            if (em != null) {
-                em.close();
-            }
-
-            em = null;
-        }
-
-        public EntityManager getCurrentSession() {
-            startSession();
-            return em;
-        }
-
-        public void setEm(EntityManager em) {
-            this.em = em;
-        }
+    @Override
+    public EntityManager getCurrentSession() {
+        startSession();
+        return em;
+    }
 }
-
