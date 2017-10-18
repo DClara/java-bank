@@ -15,12 +15,20 @@ public class CustomerServiceImpl implements CustomerService {
     private TransactionManager tx;
     private CustomerDao customerDao;
 
-    public void setTransactionManager(TransactionManager tx) {
+    public void setTx(TransactionManager tx) {
         this.tx = tx;
     }
 
     public void setCustomerDao(CustomerDao customerDao) {
         this.customerDao = customerDao;
+    }
+
+    public TransactionManager getTx() {
+        return tx;
+    }
+
+    public CustomerDao getCustomerDao() {
+        return customerDao;
     }
 
     @Override

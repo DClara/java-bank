@@ -4,35 +4,43 @@ import org.academiadecodigo.javabank.persistence.TransactionManager;
 
 public class JpaTransactionManager implements TransactionManager {
 
-    private JpaSessionManager sm;
+    private JpaSessionManager sessionManager;
 
-    public JpaTransactionManager(JpaSessionManager sm) {
-        this.sm = sm;
-    }
+    public JpaTransactionManager() {
+    };
 
     public void beginRead() {
-       sm.startSession();
+       sessionManager.startSession();
     }
 
     public void beginWrite() {
-        sm.getCurrentSession().getTransaction().begin();
+        sessionManager.getCurrentSession().getTransaction().begin();
     }
 
     public void commit() {
 
-        if (sm.getCurrentSession().getTransaction().isActive()) {
-            sm.getCurrentSession().getTransaction().commit();
+        if (sessionManager.getCurrentSession().getTransaction().isActive()) {
+            sessionManager.getCurrentSession().getTransaction().commit();
         }
 
-        sm.stopSession();
+        sessionManager.stopSession();
     }
 
     public void rollback() {
 
-        if (sm.getCurrentSession().getTransaction().isActive()) {
-            sm.getCurrentSession().getTransaction().rollback();
+        if (sessionManager.getCurrentSession().getTransaction().isActive()) {
+            sessionManager.getCurrentSession().getTransaction().rollback();
         }
 
-        sm.stopSession();
+        sessionManager.stopSession();
+    }
+
+
+    public void setSessionManager(JpaSessionManager sessionManager) {
+        this.sessionManager = sessionManager;
+    }
+
+    public JpaSessionManager getSessionManager() {
+        return sessionManager;
     }
 }

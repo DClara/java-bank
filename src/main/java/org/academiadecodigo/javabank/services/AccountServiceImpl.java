@@ -14,8 +14,17 @@ public class AccountServiceImpl implements AccountService {
         this.accountDao = accountDao;
     }
 
-    public void setTransactionManager(TransactionManager tx) {
+    public void setTx(TransactionManager tx) {
         this.tx = tx;
+    }
+
+
+    public AccountDao getAccountDao() {
+        return accountDao;
+    }
+
+    public TransactionManager getTx() {
+        return tx;
     }
 
     @Override

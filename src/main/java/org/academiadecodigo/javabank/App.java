@@ -1,6 +1,7 @@
 package org.academiadecodigo.javabank;
 
 import org.academiadecodigo.javabank.controller.Controller;
+import org.academiadecodigo.javabank.controller.LoginController;
 import org.academiadecodigo.javabank.persistence.H2WebServer;
 import org.academiadecodigo.javabank.persistence.SessionManager;
 import org.academiadecodigo.javabank.persistence.TransactionManager;
@@ -11,7 +12,10 @@ import org.academiadecodigo.javabank.persistence.jpa.JpaTransactionManager;
 import org.academiadecodigo.javabank.services.AccountServiceImpl;
 import org.academiadecodigo.javabank.services.AuthServiceImpl;
 import org.academiadecodigo.javabank.services.CustomerServiceImpl;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import javax.naming.ldap.Control;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.sql.SQLException;
@@ -20,35 +24,25 @@ public class App {
 
     public static void main(String[] args) {
 
-        try {
+            ApplicationContext context = new ClassPathXmlApplicationContext(("/spring/initXml.xml"));
 
-            H2WebServer h2WebServer = new H2WebServer();
-            h2WebServer.start();
+            LoginController log = context.getBean("loginController", LoginController.class);
+            log.init();
 
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.PERSISTENCE_UNIT);
-            JpaSessionManager sm = new JpaSessionManager(emf);
-            TransactionManager tx = new JpaTransactionManager(sm);
 
-            App app = new App();
-            app.bootStrap(tx, sm);
 
-            emf.close();
-            h2WebServer.stop();
 
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
     }
 
     private void bootStrap(TransactionManager tx, JpaSessionManager sm) {
 
-        AccountServiceImpl accountService = new AccountServiceImpl();
+        /*AccountServiceImpl accountService = new AccountServiceImpl();
         accountService.setAccountDao(new JpaAccountDao(sm));
-        accountService.setTransactionManager(tx);
+        accountService.setTx(tx);
 
         CustomerServiceImpl customerService = new CustomerServiceImpl();
         customerService.setCustomerDao(new JpaCustomerDao(sm));
-        customerService.setTransactionManager(tx);
+        customerService.setTx(tx);
 
         Bootstrap bootstrap = new Bootstrap();
 
@@ -56,9 +50,9 @@ public class App {
         bootstrap.setAccountService(accountService);
         bootstrap.setCustomerService(customerService);
 
-        Controller controller = bootstrap.wireObjects();
+        Controller controller = bootstrap.wireObjects();*/
 
         // start application
-        controller.init();
+        return;
     }
 }
