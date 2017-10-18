@@ -10,4 +10,7 @@ public abstract class AbstractView implements View {
         this.prompt = prompt;
     }
 
+    public Prompt getPrompt() {
+        return prompt;
+    }
 }
