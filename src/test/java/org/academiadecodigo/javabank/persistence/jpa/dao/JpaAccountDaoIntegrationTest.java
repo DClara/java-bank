@@ -24,8 +24,8 @@ public class JpaAccountDaoIntegrationTest extends JpaIntegrationTestHelper {
     public void setup() {
 
         accountDao = new JpaAccountDao();
-        accountDao.setSm(sm);
 
+        accountDao.setEm(em);
     }
 
     @Test
@@ -70,13 +70,10 @@ public class JpaAccountDaoIntegrationTest extends JpaIntegrationTestHelper {
     @Test
     public void testFindAllFail() {
 
-        // setup
-        tx.beginWrite();
-        Query query = sm.getCurrentSession().createQuery("delete from Account ");
+        Query query = em.createQuery("delete from Account ");
         query.executeUpdate();
-        query = sm.getCurrentSession().createQuery("delete from Customer");
+        query = em.createQuery("delete from Customer");
         query.executeUpdate();
-        tx.commit();
 
         // exercise
         List<Account> accounts = accountDao.findAll();
@@ -94,13 +91,11 @@ public class JpaAccountDaoIntegrationTest extends JpaIntegrationTestHelper {
         Account newAccount = new CheckingAccount();
 
         // exercise
-        tx.beginWrite();
         Account addedAccount = accountDao.saveOrUpdate(newAccount);
-        tx.commit();
 
         // verify
         assertNotNull("Account not added", addedAccount);
-        Account account = sm.getCurrentSession().find(Account.class, addedAccount.getId());
+        Account account = em.find(Account.class, addedAccount.getId());
         assertNotNull("Account not found", account);
 
     }
@@ -110,16 +105,14 @@ public class JpaAccountDaoIntegrationTest extends JpaIntegrationTestHelper {
 
         // setup
         int id = 1;
-        Account account = sm.getCurrentSession().find(Account.class, id);
+        Account account = em.find(Account.class, id);
         account.credit(100);
 
         // exercise
-        tx.beginWrite();
         accountDao.saveOrUpdate(account);
-        tx.commit();
 
         // verify
-        account = sm.getCurrentSession().find(Account.class, id);
+        account = em.find(Account.class, id);
         assertEquals("Account balance is wrong", 200, account.getBalance(), DOUBLE_DELTA);
 
     }
@@ -132,13 +125,14 @@ public class JpaAccountDaoIntegrationTest extends JpaIntegrationTestHelper {
         int id = 1;
 
         // exercise
-        tx.beginWrite();
+        em.getTransaction().begin();
         accountDao.delete(id);
-        tx.commit();
+
 
         // verify
-        Account account = sm.getCurrentSession().find(Account.class, id);
-        assertNotNull("Account owned by customer should not be deleted", account);
+        Account account = em.find(Account.class, id);
+        em.getTransaction().commit();
+        assertNull("Account owned by customer should not be deleted", account);
     }
 
     @Test
@@ -148,12 +142,10 @@ public class JpaAccountDaoIntegrationTest extends JpaIntegrationTestHelper {
         int id = 7;
 
         // exercise
-        tx.beginWrite();
         accountDao.delete(id);
-        tx.commit();
 
         // verify
-        Account account = sm.getCurrentSession().find(Account.class, id);
+        Account account = em.find(Account.class, id);
         assertNull("Account is not null", account);
 
     }
@@ -162,9 +154,7 @@ public class JpaAccountDaoIntegrationTest extends JpaIntegrationTestHelper {
     public void testDeleteInvalid() {
 
         // exercise
-        tx.beginWrite();
         accountDao.delete(INVALID_ID);
-        tx.commit();
     }
 
 }
