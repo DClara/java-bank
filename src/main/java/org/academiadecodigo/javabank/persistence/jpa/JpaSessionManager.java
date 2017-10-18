@@ -13,14 +13,8 @@ public class JpaSessionManager implements SessionManager<EntityManager> {
 
     private EntityManager em;
 
-    public JpaSessionManager(){};
-
     public void setEmf(EntityManagerFactory emf) {
         this.emf = emf;
-    }
-
-    public void setEm(EntityManager em) {
-        this.em = em;
     }
 
     @Override
@@ -46,6 +40,4 @@ public class JpaSessionManager implements SessionManager<EntityManager> {
         startSession();
         return em;
     }
-
-
 }

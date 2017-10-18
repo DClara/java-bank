@@ -16,8 +16,12 @@ public abstract class GenericJpaDao<T extends Model> implements Dao<T> {
     protected JpaSessionManager sm;
     protected Class<T> modelType;
 
-    public GenericJpaDao(Class<T> modelType){
+    public GenericJpaDao(Class<T> modelType) {
         this.modelType = modelType;
+    }
+
+    public void setSm(JpaSessionManager sm) {
+        this.sm = sm;
     }
 
     @Override
@@ -33,6 +37,8 @@ public abstract class GenericJpaDao<T extends Model> implements Dao<T> {
 
             // Using JPQL
 //            return em.createQuery( "from " + modelType.getSimpleName(), modelType).getResultList();
+
+
 
         } catch (HibernateException ex) {
             throw new TransactionException(ex);
@@ -77,9 +83,4 @@ public abstract class GenericJpaDao<T extends Model> implements Dao<T> {
             throw new TransactionException(ex);
         }
     }
-
-    public void setSm(JpaSessionManager sm) {
-        this.sm = sm;
-    }
-
 }

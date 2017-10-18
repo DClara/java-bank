@@ -30,7 +30,4 @@ public class LoginView extends AbstractView {
         this.loginController = loginController;
     }
 
-    public LoginController getLoginController() {
-        return loginController;
-    }
 }

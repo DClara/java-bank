@@ -2,7 +2,6 @@ package org.academiadecodigo.javabank.services;
 
 import org.academiadecodigo.javabank.model.Customer;
 import org.academiadecodigo.javabank.model.account.Account;
-import org.academiadecodigo.javabank.persistence.TransactionException;
 import org.academiadecodigo.javabank.persistence.TransactionManager;
 import org.academiadecodigo.javabank.persistence.dao.CustomerDao;
 
@@ -15,20 +14,12 @@ public class CustomerServiceImpl implements CustomerService {
     private TransactionManager tx;
     private CustomerDao customerDao;
 
-    public void setTx(TransactionManager tx) {
+    public void setTransactionManager(TransactionManager tx) {
         this.tx = tx;
     }
 
     public void setCustomerDao(CustomerDao customerDao) {
         this.customerDao = customerDao;
-    }
-
-    public TransactionManager getTx() {
-        return tx;
-    }
-
-    public CustomerDao getCustomerDao() {
-        return customerDao;
     }
 
     @Override
