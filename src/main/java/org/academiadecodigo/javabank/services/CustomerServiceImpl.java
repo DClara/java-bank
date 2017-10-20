@@ -3,7 +3,6 @@ package org.academiadecodigo.javabank.services;
 import org.academiadecodigo.javabank.model.Customer;
 import org.academiadecodigo.javabank.model.account.Account;
 import org.academiadecodigo.javabank.persistence.dao.CustomerDao;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -17,14 +16,11 @@ public class CustomerServiceImpl implements CustomerService {
         this.customerDao = customerDao;
     }
 
-    @Transactional
     @Override
     public Customer findById(Integer id) {
-
         return customerDao.findById(id);
     }
 
-    @Transactional
     @Override
     public double getBalance(Integer id) {
 
@@ -42,17 +38,15 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         return balance;
-
     }
 
-    @Transactional
     @Override
     public Set<Integer> getCustomerAccountIds(Integer id) {
 
         Customer customer = customerDao.findById(id);
 
         if (customer == null) {
-            throw new IllegalArgumentException("Customer does not exists");
+            throw new IllegalArgumentException("Customer does not exist");
         }
 
         Set<Integer> accountIds = new HashSet<>();

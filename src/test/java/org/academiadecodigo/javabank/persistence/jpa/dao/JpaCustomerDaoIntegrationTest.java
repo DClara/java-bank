@@ -24,6 +24,7 @@ public class JpaCustomerDaoIntegrationTest extends JpaIntegrationTestHelper {
     @Before
     public void setup() {
         customerDao = new JpaCustomerDao();
+        customerDao.setEm(em);
     }
 
     @Test
@@ -69,10 +70,12 @@ public class JpaCustomerDaoIntegrationTest extends JpaIntegrationTestHelper {
     public void testFindAllFail() {
 
         // setup
+        em.getTransaction().begin();
         Query query = em.createQuery("delete from Account ");
         query.executeUpdate();
         query = em.createQuery("delete from Customer");
         query.executeUpdate();
+        em.getTransaction().commit();
 
         // exercise
         List<Customer> customers = customerDao.findAll();
@@ -92,7 +95,9 @@ public class JpaCustomerDaoIntegrationTest extends JpaIntegrationTestHelper {
         newCustomer.setName(name);
 
         // exercise
+        em.getTransaction().begin();
         Customer addedCustomer = customerDao.saveOrUpdate(newCustomer);
+        em.getTransaction().commit();
 
         // verify
         assertNotNull("customer not added", addedCustomer);
@@ -117,7 +122,9 @@ public class JpaCustomerDaoIntegrationTest extends JpaIntegrationTestHelper {
         newCustomer.addAccount(sa);
 
         // exercise
+        em.getTransaction().begin();
         Customer addedCustomer = customerDao.saveOrUpdate(newCustomer);
+        em.getTransaction().commit();
 
         // verify
         assertNotNull("customer not added", addedCustomer);
@@ -140,7 +147,9 @@ public class JpaCustomerDaoIntegrationTest extends JpaIntegrationTestHelper {
         customer.setName(name);
 
         // exercise
+        em.getTransaction().begin();
         customerDao.saveOrUpdate(customer);
+        em.getTransaction().commit();
 
         // verify
         customer = em.find(Customer.class, id);
@@ -159,7 +168,9 @@ public class JpaCustomerDaoIntegrationTest extends JpaIntegrationTestHelper {
         existingCustomer.getAccounts().get(0).canCredit(100);
 
         // exercise
+        em.getTransaction().begin();
         customerDao.saveOrUpdate(existingCustomer);
+        em.getTransaction().commit();
 
         // verify
         Customer customer = em.find(Customer.class, id);
@@ -180,7 +191,9 @@ public class JpaCustomerDaoIntegrationTest extends JpaIntegrationTestHelper {
         existingCustomer.removeAccount(existingCustomer.getAccounts().get(1));
 
         // exercise
+        em.getTransaction().begin();
         customerDao.saveOrUpdate(existingCustomer);
+        em.getTransaction().commit();
 
         // verify
         Customer customer = em.find(Customer.class, id);
@@ -197,7 +210,9 @@ public class JpaCustomerDaoIntegrationTest extends JpaIntegrationTestHelper {
         int id = 1;
 
         // exercise
+        em.getTransaction().begin();
         customerDao.delete(id);
+        em.getTransaction().commit();
 
         // verify
         Customer customer = em.find(Customer.class, id);
@@ -211,7 +226,9 @@ public class JpaCustomerDaoIntegrationTest extends JpaIntegrationTestHelper {
         int id = 4;
 
         // exercise
+        em.getTransaction().begin();
         customerDao.delete(id);
+        em.getTransaction().commit();
 
         // verify
         Customer customer = em.find(Customer.class, id);
@@ -222,6 +239,8 @@ public class JpaCustomerDaoIntegrationTest extends JpaIntegrationTestHelper {
     public void testDeleteInvalid() {
 
         // exercise
+        em.getTransaction().begin();
         customerDao.delete(INVALID_ID);
+        em.getTransaction().commit();
     }
 }

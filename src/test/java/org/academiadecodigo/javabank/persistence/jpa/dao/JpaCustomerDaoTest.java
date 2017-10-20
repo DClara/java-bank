@@ -24,7 +24,9 @@ public class JpaCustomerDaoTest {
     public void setup() {
 
         em = mock(EntityManager.class);
+
         customerDao = new JpaCustomerDao();
+        customerDao.setEm(em);
 
     }
 
@@ -50,7 +52,6 @@ public class JpaCustomerDaoTest {
         verify(typedQuery, times(1)).getResultList();
         assertEquals(mockCustomers, customers);
     }
-
 
     @Test
     public void testFindById() {

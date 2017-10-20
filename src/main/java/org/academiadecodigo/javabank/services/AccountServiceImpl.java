@@ -4,7 +4,6 @@ import org.academiadecodigo.javabank.model.account.Account;
 import org.academiadecodigo.javabank.persistence.dao.AccountDao;
 import org.springframework.transaction.annotation.Transactional;
 
-
 public class AccountServiceImpl implements AccountService {
 
     private AccountDao accountDao;
@@ -13,16 +12,10 @@ public class AccountServiceImpl implements AccountService {
         this.accountDao = accountDao;
     }
 
-
     @Transactional
     @Override
     public Integer add(Account account) {
-
-        if (account == null) {
-            throw new IllegalArgumentException("invalid account id");
-        }
         return accountDao.saveOrUpdate(account).getId();
-
     }
 
     @Transactional
@@ -36,8 +29,8 @@ public class AccountServiceImpl implements AccountService {
         }
 
         account.credit(amount);
-        accountDao.saveOrUpdate(account);
 
+        accountDao.saveOrUpdate(account);
     }
 
     @Transactional
@@ -51,7 +44,9 @@ public class AccountServiceImpl implements AccountService {
         }
 
         account.debit(amount);
+
         accountDao.saveOrUpdate(account);
+
     }
 
     @Transactional
@@ -73,6 +68,7 @@ public class AccountServiceImpl implements AccountService {
 
         accountDao.saveOrUpdate(srcAccount);
         accountDao.saveOrUpdate(dstAccount);
+
     }
 }
 

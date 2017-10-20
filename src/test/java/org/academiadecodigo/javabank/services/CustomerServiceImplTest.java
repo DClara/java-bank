@@ -46,7 +46,6 @@ public class CustomerServiceImplTest {
         assertEquals(fakeCustomer, customer);
     }
 
-
     @Test
     public void testGetBalance() {
 
@@ -113,7 +112,6 @@ public class CustomerServiceImplTest {
 
         // exercise
         customerService.getCustomerAccountIds(1);
-
 
     }
 

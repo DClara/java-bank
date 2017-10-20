@@ -26,7 +26,9 @@ public class JpaAccountDaoTest {
     public void setup() {
 
         em = mock(EntityManager.class);
+
         customerDao = new JpaAccountDao();
+        customerDao.setEm(em);
 
     }
 
@@ -52,7 +54,6 @@ public class JpaAccountDaoTest {
         verify(typedQuery, times(1)).getResultList();
         assertEquals(mockAccounts, customers);
     }
-
 
     @Test
     public void testFindByIdChecking() {
@@ -89,7 +90,6 @@ public class JpaAccountDaoTest {
         assertEquals(fakeAccount, customer);
 
     }
-
 
     @Test
     public void testSaveOrUpdateChecking() {
@@ -156,4 +156,5 @@ public class JpaAccountDaoTest {
         verify(em, times(1)).remove(fakeAccount);
 
     }
+
 }

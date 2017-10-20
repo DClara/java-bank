@@ -24,8 +24,8 @@ public class JpaAccountDaoIntegrationTest extends JpaIntegrationTestHelper {
     public void setup() {
 
         accountDao = new JpaAccountDao();
-
         accountDao.setEm(em);
+
     }
 
     @Test
@@ -70,10 +70,13 @@ public class JpaAccountDaoIntegrationTest extends JpaIntegrationTestHelper {
     @Test
     public void testFindAllFail() {
 
+        // setup
+        em.getTransaction().begin();
         Query query = em.createQuery("delete from Account ");
         query.executeUpdate();
         query = em.createQuery("delete from Customer");
         query.executeUpdate();
+        em.getTransaction().commit();
 
         // exercise
         List<Account> accounts = accountDao.findAll();
@@ -91,7 +94,9 @@ public class JpaAccountDaoIntegrationTest extends JpaIntegrationTestHelper {
         Account newAccount = new CheckingAccount();
 
         // exercise
+        em.getTransaction().begin();
         Account addedAccount = accountDao.saveOrUpdate(newAccount);
+        em.getTransaction().commit();
 
         // verify
         assertNotNull("Account not added", addedAccount);
@@ -109,7 +114,9 @@ public class JpaAccountDaoIntegrationTest extends JpaIntegrationTestHelper {
         account.credit(100);
 
         // exercise
+        em.getTransaction().begin();
         accountDao.saveOrUpdate(account);
+        em.getTransaction().commit();
 
         // verify
         account = em.find(Account.class, id);
@@ -127,12 +134,11 @@ public class JpaAccountDaoIntegrationTest extends JpaIntegrationTestHelper {
         // exercise
         em.getTransaction().begin();
         accountDao.delete(id);
-
+        em.getTransaction().commit();
 
         // verify
         Account account = em.find(Account.class, id);
-        em.getTransaction().commit();
-        assertNull("Account owned by customer should not be deleted", account);
+        assertNotNull("Account owned by customer should not be deleted", account);
     }
 
     @Test
@@ -142,7 +148,9 @@ public class JpaAccountDaoIntegrationTest extends JpaIntegrationTestHelper {
         int id = 7;
 
         // exercise
+        em.getTransaction().begin();
         accountDao.delete(id);
+        em.getTransaction().commit();
 
         // verify
         Account account = em.find(Account.class, id);
@@ -154,7 +162,9 @@ public class JpaAccountDaoIntegrationTest extends JpaIntegrationTestHelper {
     public void testDeleteInvalid() {
 
         // exercise
+        em.getTransaction().begin();
         accountDao.delete(INVALID_ID);
+        em.getTransaction().commit();
     }
 
 }

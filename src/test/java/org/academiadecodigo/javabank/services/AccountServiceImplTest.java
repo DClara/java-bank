@@ -59,7 +59,6 @@ public class AccountServiceImplTest {
         assertEquals(fakeId, id);
     }
 
-
     @Test
     public void testDeposit() {
 
@@ -86,9 +85,7 @@ public class AccountServiceImplTest {
         // exercise
         accountService.deposit(1, 100);
 
-
     }
-
 
     @Test
     public void testWithdraw() {
@@ -116,9 +113,7 @@ public class AccountServiceImplTest {
         // exercise
         accountService.withdraw(1, 100);
 
-
     }
-
 
     @Test
     public void testTransfer() {
