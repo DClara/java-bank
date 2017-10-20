@@ -1,8 +1,11 @@
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.academiadecodigo.javabank</groupId>
     <artifactId>javabank</artifactId>
-    <version>0.0.1</version>
+    <packaging>war</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>customerApp Maven Webapp</name>
+    <url>http://maven.apache.org</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -74,6 +77,24 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.44</version>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>4.3.11.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring4</artifactId>
+            <version>3.0.8.RELEASE</version>
+        </dependency>
 
     </dependencies>
 
@@ -88,37 +109,19 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
                 <configuration>
-                    <transformers>
-                        <transformer
-                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                            <mainClass>org.academiadecodigo.javabank.App</mainClass>
-                        </transformer>
-
-                        <!-- Make sure multiple spring jars do not override exiting META-INF -->
-                        <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                            <resource>META-INF/spring.handlers</resource>
-                        </transformer>
-                        <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                            <resource>META-INF/spring.schemas</resource>
-                        </transformer>
-
-                    </transformers>
-                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <url>http://localhost:8080/manager/text                    </url>
+                    <!--  server defined in ~/.m2/settings.xml  -->
+                    <server>novabase</server>
+                    <path>/dc</path>
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>org.academiadecodigo.javabank</finalName>
     </build>
 </project>

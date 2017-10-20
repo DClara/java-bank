@@ -1,5 +1,5 @@
 2017-10-16 14:32:39 database: wrong user or password; user: "SA2222"
-org.h2.message.DbException: Wrong user name or password [28000-196]
+org.h2.message.DbException: Wrong user firstName or password [28000-196]
 	at org.h2.message.DbException.get(DbException.java:179)
 	at org.h2.message.DbException.get(DbException.java:155)
 	at org.h2.message.DbException.get(DbException.java:144)
@@ -51,11 +51,11 @@ org.h2.message.DbException: Wrong user name or password [28000-196]
 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
 	at org.academiadecodigo.javabank.App.bootStrap(App.java:21)
 	at org.academiadecodigo.javabank.App.main(App.java:12)
-Caused by: org.h2.jdbc.JdbcSQLException: Wrong user name or password [28000-196]
+Caused by: org.h2.jdbc.JdbcSQLException: Wrong user firstName or password [28000-196]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
 	... 51 more
 2017-10-16 14:32:40 database: wrong user or password; user: "SA2222"
-org.h2.message.DbException: Wrong user name or password [28000-196]
+org.h2.message.DbException: Wrong user firstName or password [28000-196]
 	at org.h2.message.DbException.get(DbException.java:179)
 	at org.h2.message.DbException.get(DbException.java:155)
 	at org.h2.message.DbException.get(DbException.java:144)
@@ -105,6 +105,6 @@ org.h2.message.DbException: Wrong user name or password [28000-196]
 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
 	at org.academiadecodigo.javabank.App.bootStrap(App.java:21)
 	at org.academiadecodigo.javabank.App.main(App.java:12)
-Caused by: org.h2.jdbc.JdbcSQLException: Wrong user name or password [28000-196]
+Caused by: org.h2.jdbc.JdbcSQLException: Wrong user firstName or password [28000-196]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
 	... 49 more

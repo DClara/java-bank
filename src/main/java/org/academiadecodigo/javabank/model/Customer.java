@@ -9,7 +9,10 @@ import java.util.List;
 @Entity
 public class Customer extends AbstractModel {
 
-    private String name;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
 
     @OneToMany(
             // propagate changes on customer entity to account entities
@@ -25,14 +28,43 @@ public class Customer extends AbstractModel {
             // fetch accounts from database together with user
             fetch = FetchType.EAGER
     )
+
     private List<Account> accounts = new ArrayList<>();
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public List<Account> getAccounts() {
@@ -52,7 +84,7 @@ public class Customer extends AbstractModel {
     @Override
     public String toString() {
         return "Customer{" +
-                "name='" + name + '\'' +
+                "firstName='" + firstName + '\'' +
                 ", accounts=" + accounts +
                 "} " + super.toString();
     }
