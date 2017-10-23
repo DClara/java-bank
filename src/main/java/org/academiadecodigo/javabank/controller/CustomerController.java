@@ -67,7 +67,7 @@ public class CustomerController {
 
         model.addAttribute("customer", customerConverter.convertToDto(activeCustomer));
 
-        return "edit";
+        return "newCustomer";
     }
 
     @RequestMapping(method = RequestMethod.POST, path = {"/add", "/update"})
