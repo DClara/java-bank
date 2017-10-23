@@ -44,4 +44,9 @@ public class MockAccountService extends AbstractMockService<Account> implements 
             dstAccount.credit(amount);
         }
     }
+
+    @Override
+    public Account findById(Integer id) {
+        return null;
+    }
 }

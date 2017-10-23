@@ -6,10 +6,12 @@
 </head>
 <body>
 <div>
+
     <h2 th:text="'Customer ' + ${customer.id}">Customer 2</h2>
-    <form action="/dc/customer/">
+    <!-- <form action="/dc/customer/">
         <input type="submit" value="Go back" />
-    </form>
+    </form> -->
+
 </div>
 <table>
     <tr>
@@ -27,6 +29,23 @@
         <td th:text="${customer.phone}">916400280</td>
     </tr>
 </table>
+
+<h2 th:text="'Accounts: '">Accounts</h2>
+
+<table>
+    <tr>
+        <th>#</th>
+        <th>Balance</th>
+    </tr>
+    <tr th:each="account : ${accounts}">
+        <td th:text="${account.id}">1</td>
+        <td th:text="${account.balance}">200</td>
+    </tr>
+</table>
+
+
+<br/>
+<a class="btn btn-default pull-left" th:href="@{/customer/}">Customer List</a>
 
 </body>
 </html>

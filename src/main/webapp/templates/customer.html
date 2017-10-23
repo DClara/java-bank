@@ -24,11 +24,17 @@
             <td th:text="${customer.email}">duartenvclara@gmail.com</td>
             <td th:text="${customer.phone}">916400280</td>
             <td><a
-                th:href="@{/customer/show/{id}(id=${customer.id})}">View</a></td>
+                    th:href="@{/customer/show/{id}(id=${customer.id})}">View</a></td>
             <td><a
-                th:href="@{/customer/delete/{id}(id=${customer.id})}">Delete</a></td>
+                    th:href="@{/customer/edit/{id}(id=${customer.id})}">Edit</a></td>
+            <td><a
+                    th:href="@{/customer/delete/{id}(id=${customer.id})}">Delete</a></td>
         </tr>
     </table>
+
+    <br/>
+    <a class="btn btn-default pull-left" th:href="@{/customer/newCustomer}">New Customer</a>
+
 </div>
 </body>
 </html>

@@ -1,8 +1,11 @@
 package org.academiadecodigo.javabank.model;
 
 import org.academiadecodigo.javabank.model.account.Account;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +84,8 @@ public class Customer extends AbstractModel {
         account.setCustomer(null);
     }
 
+
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -88,6 +93,8 @@ public class Customer extends AbstractModel {
                 ", accounts=" + accounts +
                 "} " + super.toString();
     }
+
+
 }
 
 

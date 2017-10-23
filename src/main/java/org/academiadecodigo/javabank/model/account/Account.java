@@ -31,6 +31,10 @@ public abstract class Account extends AbstractModel {
         return balance;
     }
 
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
     public abstract AccountType getAccountType();
 
     public boolean canDebit(double amount) {

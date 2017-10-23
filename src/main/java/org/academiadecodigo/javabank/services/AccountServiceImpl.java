@@ -74,6 +74,11 @@ public class AccountServiceImpl implements AccountService {
         accountDao.saveOrUpdate(dstAccount);
 
     }
+
+    @Override
+    public Account findById(Integer id) {
+        return accountDao.findById(id);
+    }
 }
 
 
