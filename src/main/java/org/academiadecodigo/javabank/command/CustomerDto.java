@@ -2,7 +2,7 @@ package org.academiadecodigo.javabank.command;
 
 import javax.validation.constraints.*;
 
-public class CustomerForm {
+public class CustomerDto {
 
     private Integer id;
 
@@ -65,7 +65,7 @@ public class CustomerForm {
 
     @Override
     public String toString() {
-        return "CustomerForm{" +
+        return "CustomerDto{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
