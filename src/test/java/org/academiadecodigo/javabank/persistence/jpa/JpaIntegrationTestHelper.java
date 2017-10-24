@@ -18,7 +18,6 @@ public class JpaIntegrationTestHelper {
         GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
         ctx.getEnvironment().setActiveProfiles("test");
         ctx.load("file:src/main/webapp/WEB-INF/spring/spring-config.xml");
-        //"file:src/main/webapp/WEB-INF/spring/spring-config.xml"
         ctx.refresh();
 
         emf = ctx.getBean(EntityManagerFactory.class);

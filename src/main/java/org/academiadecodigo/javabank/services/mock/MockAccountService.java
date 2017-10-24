@@ -7,6 +7,11 @@ import org.academiadecodigo.javabank.services.AccountService;
 public class MockAccountService extends AbstractMockService<Account> implements AccountService {
 
     @Override
+    public Account get(Integer id) {
+        return modelMap.get(id);
+    }
+
+    @Override
     public Integer add(Account account) {
 
         if (account.getId() == null) {
@@ -43,10 +48,5 @@ public class MockAccountService extends AbstractMockService<Account> implements 
             srcAccount.debit(amount);
             dstAccount.credit(amount);
         }
-    }
-
-    @Override
-    public Account findById(Integer id) {
-        return null;
     }
 }

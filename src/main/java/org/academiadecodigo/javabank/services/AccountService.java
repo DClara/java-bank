@@ -4,6 +4,8 @@ import org.academiadecodigo.javabank.model.account.Account;
 
 public interface AccountService {
 
+    Account get(Integer id);
+
     Integer add(Account account);
 
     void deposit(Integer id, double amount);
@@ -11,7 +13,5 @@ public interface AccountService {
     void withdraw(Integer id, double amount);
 
     void transfer(Integer srcId, Integer dstId, double amount);
-
-    Account findById(Integer id);
 
 }

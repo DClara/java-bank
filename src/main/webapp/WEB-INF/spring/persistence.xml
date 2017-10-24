@@ -14,7 +14,4 @@
         <property name="entityManagerFactory" ref="emFactory" />
     </bean>
 
-    <bean id="accountDao" class="org.academiadecodigo.javabank.persistence.dao.jpa.JpaAccountDao"/>
-    <bean id="customerDao" class="org.academiadecodigo.javabank.persistence.dao.jpa.JpaCustomerDao"/>
-
 </beans>

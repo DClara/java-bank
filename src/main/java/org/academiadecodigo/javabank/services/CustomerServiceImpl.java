@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,7 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer findById(Integer id) {
+    public Customer get(Integer id) {
         return customerDao.findById(id);
     }
 
@@ -67,22 +66,19 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> findAll() {
-
+    public List<Customer> list() {
         return customerDao.findAll();
     }
 
-    @Override
     @Transactional
-    public void delete(Integer id) {
-        customerDao.delete(id);
-    }
-
     @Override
-    @Transactional
     public Customer save(Customer customer) {
         return customerDao.saveOrUpdate(customer);
     }
 
-
+    @Transactional
+    @Override
+    public void delete(Integer id) {
+        customerDao.delete(id);
+    }
 }
